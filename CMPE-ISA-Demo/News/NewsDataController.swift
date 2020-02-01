@@ -10,10 +10,10 @@ import UIKit
 
 class NewsDataController: NSObject {
     let wrapper = Wrapper.init()
-    var collection : NewsCollection!
+    var collection = NewsCollection.init(articles: [])
     static let shared = NewsDataController.init()
     
-    func fetchNews() {
+    func fetchNews( response : @escaping (()->Void)) {
         let nR = NewsRequest.init(
             response: {[weak self] (data, error) in
                 if let e = error {
@@ -22,6 +22,7 @@ class NewsDataController: NSObject {
                 }else {
                     if let d = data as? Data{
                         self?.mapToLocal(data: d)
+                        response()
                     }
                 }
             },

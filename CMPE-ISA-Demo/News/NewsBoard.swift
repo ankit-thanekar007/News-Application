@@ -11,11 +11,14 @@ import UIKit
 class NewsBoard: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
+    @IBOutlet private var tableView : UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        NewsDataController.shared.fetchNews()
+        NewsDataController.shared.fetchNews { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     private func setupSearchController() {
@@ -47,15 +50,21 @@ extension NewsBoard: UISearchResultsUpdating {
 }
 
 extension NewsBoard : UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return NewsDataController.shared.collection.articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsCell
+        cell.cellData = NewsDataController.shared.collection.articles[indexPath.row]
+        cell.setData()
+        return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
 }
 
 extension NewsBoard : UITableViewDelegate {

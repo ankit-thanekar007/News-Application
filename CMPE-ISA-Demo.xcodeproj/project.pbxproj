@@ -19,6 +19,7 @@
 		BC653E8523E4365700A82B0E /* NewsDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E8423E4365700A82B0E /* NewsDataController.swift */; };
 		BC653E8723E436F000A82B0E /* Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E8623E436F000A82B0E /* Wrapper.swift */; };
 		BC653E8A23E43F9D00A82B0E /* NewsCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E8923E43F9D00A82B0E /* NewsCollection.swift */; };
+		BC653E8C23E5605A00A82B0E /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E8B23E5605A00A82B0E /* NewsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		BC653E8423E4365700A82B0E /* NewsDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDataController.swift; sourceTree = "<group>"; };
 		BC653E8623E436F000A82B0E /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
 		BC653E8923E43F9D00A82B0E /* NewsCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollection.swift; sourceTree = "<group>"; };
+		BC653E8B23E5605A00A82B0E /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				BC653E7E23E433AD00A82B0E /* NewsBoard.swift */,
+				BC653E8B23E5605A00A82B0E /* NewsCell.swift */,
 				BC653E8423E4365700A82B0E /* NewsDataController.swift */,
 				BC653E8023E4355400A82B0E /* NewsModel.swift */,
 				BC653E8923E43F9D00A82B0E /* NewsCollection.swift */,
@@ -168,6 +171,7 @@
 				BC653E8723E436F000A82B0E /* Wrapper.swift in Sources */,
 				BC653E6A23E27A1000A82B0E /* SceneDelegate.swift in Sources */,
 				BC653E8323E435E600A82B0E /* Source.swift in Sources */,
+				BC653E8C23E5605A00A82B0E /* NewsCell.swift in Sources */,
 				BC653E8523E4365700A82B0E /* NewsDataController.swift in Sources */,
 				BC653E7223E27A1000A82B0E /* CMPE_ISA_Demo.xcdatamodeld in Sources */,
 				BC653E7F23E433AD00A82B0E /* NewsBoard.swift in Sources */,

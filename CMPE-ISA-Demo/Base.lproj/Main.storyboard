@@ -21,9 +21,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OJ0-Nb-vMR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1723" y="382"/>
+            <point key="canvasLocation" x="1459" y="382"/>
         </scene>
-        <!--News Board-->
+        <!--News Hub-->
         <scene sceneID="kbv-bH-roQ">
             <objects>
                 <viewController id="oxu-k1-NVH" customClass="NewsBoard" customModule="CMPE_ISA_Demo" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,28 +31,63 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q6N-wp-XSx">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Q6N-wp-XSx">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsCell" textLabel="1n3-Tv-RnN" rowHeight="100" style="IBUITableViewCellStyleDefault" id="uxi-dm-I0j">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsCell" rowHeight="174" id="uxi-dm-I0j" customClass="NewsCell" customModule="CMPE_ISA_Demo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="55.5" width="414" height="174"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uxi-dm-I0j" id="ksq-oo-Ak8">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="174"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1n3-Tv-RnN">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="100"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KLc-7C-FuH">
+                                                    <rect key="frame" x="0.0" y="8" width="414" height="158"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1go-1b-a2c">
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="158"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="2" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klm-cL-Nne">
+                                                            <rect key="frame" x="20" y="0.0" width="374" height="158"/>
+                                                            <fontDescription key="fontDescription" name="Menlo-BoldItalic" family="Menlo" pointSize="18"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="klm-cL-Nne" firstAttribute="top" secondItem="KLc-7C-FuH" secondAttribute="top" id="10v-1Z-Tvb"/>
+                                                        <constraint firstItem="1go-1b-a2c" firstAttribute="width" secondItem="KLc-7C-FuH" secondAttribute="width" id="56z-Y7-G5Z"/>
+                                                        <constraint firstItem="klm-cL-Nne" firstAttribute="leading" secondItem="KLc-7C-FuH" secondAttribute="leading" constant="20" symbolic="YES" id="Mjl-Y5-pzj"/>
+                                                        <constraint firstAttribute="trailing" secondItem="klm-cL-Nne" secondAttribute="trailing" constant="20" symbolic="YES" id="X4z-dQ-CWd"/>
+                                                        <constraint firstAttribute="bottom" secondItem="1go-1b-a2c" secondAttribute="bottom" id="c8o-cP-O7i"/>
+                                                        <constraint firstAttribute="trailing" secondItem="1go-1b-a2c" secondAttribute="trailing" id="fvH-PO-Mhf"/>
+                                                        <constraint firstItem="1go-1b-a2c" firstAttribute="centerY" secondItem="KLc-7C-FuH" secondAttribute="centerY" id="h2g-81-rLD"/>
+                                                        <constraint firstItem="1go-1b-a2c" firstAttribute="top" secondItem="KLc-7C-FuH" secondAttribute="top" id="r4k-OD-CZR"/>
+                                                        <constraint firstAttribute="bottom" secondItem="klm-cL-Nne" secondAttribute="bottom" id="tfI-51-tli"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="KLc-7C-FuH" firstAttribute="top" secondItem="ksq-oo-Ak8" secondAttribute="top" constant="8" id="VT4-cd-Fbh"/>
+                                                <constraint firstItem="KLc-7C-FuH" firstAttribute="leading" secondItem="ksq-oo-Ak8" secondAttribute="leading" id="bQL-jD-HCh"/>
+                                                <constraint firstAttribute="bottom" secondItem="KLc-7C-FuH" secondAttribute="bottom" constant="8" id="eFA-ev-Uw5"/>
+                                                <constraint firstAttribute="trailing" secondItem="KLc-7C-FuH" secondAttribute="trailing" id="tVL-On-lZU"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="newsImage" destination="1go-1b-a2c" id="tgO-Ld-S3p"/>
+                                            <outlet property="newsTitle" destination="klm-cL-Nne" id="Gsn-Mu-Xbg"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="oxu-k1-NVH" id="Tqe-BU-xCB"/>
+                                    <outlet property="delegate" destination="oxu-k1-NVH" id="TWc-BN-R1u"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -64,16 +99,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b5o-09-GbX"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fzw-q2-i6I"/>
+                    <navigationItem key="navigationItem" title="News Hub" id="fzw-q2-i6I"/>
                     <connections>
+                        <outlet property="tableView" destination="Q6N-wp-XSx" id="AkQ-F4-Imn"/>
                         <segue destination="nEK-0c-vZr" kind="show" identifier="NewsDetail" id="Vd6-36-1eO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0za-ai-uSq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1723" y="-267"/>
+            <point key="canvasLocation" x="1489.8550724637682" y="-266.51785714285711"/>
         </scene>
-        <!--View Controller-->
+        <!--News Detail-->
         <scene sceneID="snf-hc-nxB">
             <objects>
                 <viewController id="nEK-0c-vZr" sceneMemberID="viewController">
@@ -83,7 +119,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="m2R-py-dQB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="3O6-Nn-ct5"/>
+                    <navigationItem key="navigationItem" title="News Detail" id="3O6-Nn-ct5"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pml-ch-RXa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -107,15 +143,21 @@
             </objects>
             <point key="canvasLocation" x="-104" y="59"/>
         </scene>
-        <!--Item 1-->
+        <!--Navigation Controller-->
         <scene sceneID="Twm-LT-phR">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yad-Bb-oJq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 1" id="pyU-3y-LGb"/>
+                    <tabBarItem key="tabBarItem" systemItem="mostRecent" id="pyU-3y-LGb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z45-xd-UxU">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="30"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="30"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -126,11 +168,11 @@
             </objects>
             <point key="canvasLocation" x="813.04347826086962" y="-266.51785714285711"/>
         </scene>
-        <!--Item 2-->
+        <!--User-->
         <scene sceneID="mF1-fY-Z9f">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9aO-RX-GST" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 2" id="ABk-uB-SVX"/>
+                    <tabBarItem key="tabBarItem" title="User" image="person.circle.fill" catalog="system" id="ABk-uB-SVX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U10-pU-MOr">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -146,4 +188,7 @@
             <point key="canvasLocation" x="813.04347826086962" y="382.36607142857139"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="person.circle.fill" catalog="system" width="64" height="60"/>
+    </resources>
 </document>
