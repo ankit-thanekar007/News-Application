@@ -67,7 +67,7 @@ extension NewsBoard : UITableViewDataSource {
         if NewsDataController.shared.shouldFetch() {
             let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 100))
             view.backgroundColor = .red
-            let activityIndicator = UIActivityIndicatorView.init(style: .large)
+            let activityIndicator = UIActivityIndicatorView.init(style: .whiteLarge)
             activityIndicator.center = view.center
             view.addSubview(activityIndicator)
             activityIndicator.startAnimating()
