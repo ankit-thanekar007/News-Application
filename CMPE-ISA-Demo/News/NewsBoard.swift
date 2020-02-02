@@ -16,9 +16,7 @@ class NewsBoard: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        NewsDataController.shared.fetchNews { [weak self] in
-            self?.tableView.reloadData()
-        }
+        fetchNews()
     }
     
     private func setupSearchController() {
@@ -29,24 +27,17 @@ class NewsBoard: UIViewController {
         definesPresentationContext = true
     }
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func fetchNews(){
+        NewsDataController.shared.fetchNews { [weak self] in
+            self?.tableView.reloadSections(IndexSet.init(integer: 0), with: .automatic)
+        }
     }
-    */
-
 }
 
 extension NewsBoard: UISearchResultsUpdating {
-  func updateSearchResults(for searchController: UISearchController) {
-    // TODO:
-  }
+    func updateSearchResults(for searchController: UISearchController) {
+        // TODO:
+    }
 }
 
 extension NewsBoard : UITableViewDataSource {
@@ -64,6 +55,29 @@ extension NewsBoard : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == (NewsDataController.shared.collection.articles.count - 1) {
+            self.fetchNews()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if NewsDataController.shared.shouldFetch() {
+            let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 100))
+            view.backgroundColor = .red
+            let activityIndicator = UIActivityIndicatorView.init(style: .large)
+            activityIndicator.center = view.center
+            view.addSubview(activityIndicator)
+            activityIndicator.startAnimating()
+            return view
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return NewsDataController.shared.shouldFetch() ? 100 : 0.0001
     }
 }
 

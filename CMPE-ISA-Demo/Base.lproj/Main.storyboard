@@ -45,7 +45,10 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KLc-7C-FuH">
                                                     <rect key="frame" x="0.0" y="8" width="414" height="158"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1go-1b-a2c">
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Hrt-tM-C0b">
+                                                            <rect key="frame" x="20" y="0.0" width="374" height="158"/>
+                                                        </activityIndicatorView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1go-1b-a2c">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="158"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -53,7 +56,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="2" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klm-cL-Nne">
                                                             <rect key="frame" x="20" y="0.0" width="374" height="158"/>
                                                             <fontDescription key="fontDescription" name="Menlo-BoldItalic" family="Menlo" pointSize="18"/>
-                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -63,11 +66,15 @@
                                                         <constraint firstItem="1go-1b-a2c" firstAttribute="width" secondItem="KLc-7C-FuH" secondAttribute="width" id="56z-Y7-G5Z"/>
                                                         <constraint firstItem="klm-cL-Nne" firstAttribute="leading" secondItem="KLc-7C-FuH" secondAttribute="leading" constant="20" symbolic="YES" id="Mjl-Y5-pzj"/>
                                                         <constraint firstAttribute="trailing" secondItem="klm-cL-Nne" secondAttribute="trailing" constant="20" symbolic="YES" id="X4z-dQ-CWd"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Hrt-tM-C0b" secondAttribute="trailing" constant="20" symbolic="YES" id="ZK0-1O-rJT"/>
                                                         <constraint firstAttribute="bottom" secondItem="1go-1b-a2c" secondAttribute="bottom" id="c8o-cP-O7i"/>
                                                         <constraint firstAttribute="trailing" secondItem="1go-1b-a2c" secondAttribute="trailing" id="fvH-PO-Mhf"/>
                                                         <constraint firstItem="1go-1b-a2c" firstAttribute="centerY" secondItem="KLc-7C-FuH" secondAttribute="centerY" id="h2g-81-rLD"/>
+                                                        <constraint firstItem="Hrt-tM-C0b" firstAttribute="top" secondItem="KLc-7C-FuH" secondAttribute="top" id="oiL-8o-Q93"/>
                                                         <constraint firstItem="1go-1b-a2c" firstAttribute="top" secondItem="KLc-7C-FuH" secondAttribute="top" id="r4k-OD-CZR"/>
                                                         <constraint firstAttribute="bottom" secondItem="klm-cL-Nne" secondAttribute="bottom" id="tfI-51-tli"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Hrt-tM-C0b" secondAttribute="bottom" id="vgo-UJ-ThM"/>
+                                                        <constraint firstItem="Hrt-tM-C0b" firstAttribute="leading" secondItem="KLc-7C-FuH" secondAttribute="leading" constant="20" symbolic="YES" id="yqq-tH-Lz2"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -79,6 +86,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="newLoader" destination="Hrt-tM-C0b" id="oR3-8b-NZP"/>
                                             <outlet property="newsImage" destination="1go-1b-a2c" id="tgO-Ld-S3p"/>
                                             <outlet property="newsTitle" destination="klm-cL-Nne" id="Gsn-Mu-Xbg"/>
                                         </connections>

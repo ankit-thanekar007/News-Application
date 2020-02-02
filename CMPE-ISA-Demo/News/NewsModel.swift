@@ -12,10 +12,11 @@ class NewsModel: NSObject, Codable {
     let source: Source?
     let author, title, welcomeDescription: String?
     let url: String?
-    let urlToImage: String
+    let urlToImage: String?
     let publishedAt: String?
     let content: String?
     var imageData : Data?
+    var image : UIImage?
     
     enum CodingKeys: String, CodingKey {
         case source, author, title
@@ -23,7 +24,7 @@ class NewsModel: NSObject, Codable {
         case url, urlToImage, publishedAt, content, imageData
     }
     
-    init(source: Source?, author: String?, title: String?, welcomeDescription: String?, url: String?, urlToImage: String, publishedAt: String?, content: String?, imageData : Data?) {
+    init(source: Source?, author: String?, title: String?, welcomeDescription: String?, url: String?, urlToImage: String?, publishedAt: String?, content: String?, imageData : Data?) {
         self.source = source
         self.author = author
         self.title = title
@@ -39,14 +40,17 @@ class NewsModel: NSObject, Codable {
 extension NewsModel {
     
     func downloadImage(result : @escaping ((Bool)->Void))  {
-        if(imageData != nil){result(true); return}
+        if(image != nil){result(true); return}
+        if(urlToImage == nil){result(false); return}
         let session = URLSession.init(configuration: .default)
-        let task = session.dataTask(with: URL.init(string: urlToImage)!) {[weak self] (data, response, error) in
-            if data != nil {
-                self?.imageData = data
+        let task = session.dataTask(with: URL.init(string: urlToImage!)!) {[weak self] (data, response, error) in
+            if let d = data, let image = UIImage.init(data: d) {
+//                self?.imageData = data
+                self?.image = image
                 result(true)
             }else {
-                self?.imageData = nil
+//                self?.imageData = nil
+                self?.image = nil
                 result(false)
             }
         }

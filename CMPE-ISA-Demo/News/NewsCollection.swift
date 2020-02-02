@@ -10,12 +10,13 @@ import UIKit
 
 class NewsCollection: NSObject, Codable {
     var articles: [NewsModel] = []
-    
+    var totalResults : Int
     enum CodingKeys: String, CodingKey {
-        case articles
+        case articles, totalResults
     }
     
-    init(articles: [NewsModel]) {
+    init(articles: [NewsModel], results : Int) {
         self.articles = articles
+        self.totalResults = results
     }
 }

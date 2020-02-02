@@ -12,6 +12,7 @@ class NewsCell: UITableViewCell {
     
     @IBOutlet var newsTitle : UILabel!
     @IBOutlet var newsImage : UIImageView!
+    @IBOutlet var newLoader : UIActivityIndicatorView!
     @IBOutlet var newsDate : UILabel!
     @IBOutlet var newsAuthor : UILabel!
     
@@ -28,7 +29,7 @@ class NewsCell: UITableViewCell {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
+        newLoader.stopAnimating()
     }
     
     override func prepareForReuse() {
@@ -39,14 +40,16 @@ class NewsCell: UITableViewCell {
     func setData(){
         if let d = cellData {
             newsTitle.text = d.title
-            cellData.downloadImage { (result) in
-                if result {
+            newLoader.startAnimating()
+            DispatchQueue.global(qos: .userInteractive).async {
+                self.cellData.downloadImage { (result) in
                     DispatchQueue.main.async {
-                        if let id = self.cellData.imageData {
-                            if let image = UIImage.init(data: id) {
-                                self.newsImage?.image = image
+                        if result {
+                            if let id = self.cellData.image {
+                                self.newsImage?.image = id           
                             }
                         }
+                        self.newLoader.stopAnimating()
                     }
                 }
             }

@@ -10,8 +10,25 @@ import UIKit
 
 class NewsDataController: NSObject {
     let wrapper = Wrapper.init()
-    var collection = NewsCollection.init(articles: [])
+    var pageNumber = 1
+    
+    var collection = NewsCollection.init(articles: [], results: -1)
     static let shared = NewsDataController.init()
+    
+    private func generateURL() -> String {
+        var base = "https://newsapi.org/v2/top-headlines?country=us&apiKey=404fcb2608764b3983f73c8a4119b20d"
+        base += "&page=\(pageNumber)"
+        pageNumber+=1
+        print("######### \(base) ########")
+        return base
+    }
+    
+    func shouldFetch() -> Bool{
+        if collection.totalResults > collection.articles.count {
+            return true
+        }
+        return false
+    }
     
     func fetchNews( response : @escaping (()->Void)) {
         let nR = NewsRequest.init(
@@ -26,7 +43,7 @@ class NewsDataController: NSObject {
                     }
                 }
             },
-            url: "https://newsapi.org/v2/everything?q=bitcoin&apiKey=404fcb2608764b3983f73c8a4119b20d",
+            url: self.generateURL(),
             headers: nil,
             data: nil)
         
@@ -38,14 +55,27 @@ class NewsDataController: NSObject {
         let decoder = JSONDecoder()
         do {
             let decoded = try decoder.decode(NewsCollection.self, from: data)
-            collection = decoded
+            if(collection.totalResults == -1) {
+                collection = decoded
+            }else {
+                collection.totalResults = decoded.totalResults
+                separateArticlesAndAdd(data: data)
+            }
         } catch let error {
-            print("Failed to decode JSON" + error.localizedDescription)
+            print("Failed to decode JSON " + error.localizedDescription)
         }
     }
     
-    
-    
-    
-    
+    private func separateArticlesAndAdd(data : Data){
+        let decoder = JSONDecoder()
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any]
+            let articles = json?["articles"] as! [Any]
+            let articleData = try JSONSerialization.data(withJSONObject: articles, options: .prettyPrinted)
+            let decodedModels = try decoder.decode([NewsModel].self, from: articleData)
+            collection.articles.append(contentsOf: decodedModels)
+        }catch let error {
+            print("Failed to decode JSON " + error.localizedDescription)
+        }
+    }
 }
