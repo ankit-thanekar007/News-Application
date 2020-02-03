@@ -30,7 +30,7 @@ class NewsDataController: NSObject {
         return false
     }
     
-    func fetchNews( response : @escaping (()->Void)) {
+    func fetchNews( response : @escaping (((s : Int, e : Int))->Void)) {
         let nR = NewsRequest.init(
             response: {[weak self] (data, error) in
                 if let e = error {
@@ -38,8 +38,7 @@ class NewsDataController: NSObject {
                     print("Failed to fetch news" + e.localizedDescription)
                 }else {
                     if let d = data as? Data{
-                        self?.mapToLocal(data: d)
-                        response()
+                        response(self!.mapToLocal(data: d))
                     }
                 }
             },
@@ -51,19 +50,23 @@ class NewsDataController: NSObject {
     }
     
     
-    func mapToLocal(data : Data)  {
+    func mapToLocal(data : Data) -> (s : Int, e : Int)  {
         let decoder = JSONDecoder()
         do {
             let decoded = try decoder.decode(NewsCollection.self, from: data)
             if(collection.totalResults == -1) {
                 collection = decoded
+                return (s : 0, e : collection.articles.count)
             }else {
                 collection.totalResults = decoded.totalResults
+                let before = collection.articles.count
                 separateArticlesAndAdd(data: data)
+                return (s : before, e : collection.articles.count)
             }
         } catch let error {
             print("Failed to decode JSON " + error.localizedDescription)
         }
+        return (s : 0, e : 0)
     }
     
     private func separateArticlesAndAdd(data : Data){

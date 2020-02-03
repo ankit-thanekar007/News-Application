@@ -45,11 +45,14 @@ extension NewsModel {
         let session = URLSession.init(configuration: .default)
         let task = session.dataTask(with: URL.init(string: urlToImage!)!) {[weak self] (data, response, error) in
             if let d = data, let image = UIImage.init(data: d) {
-//                self?.imageData = data
-                self?.image = image
+                
+                let resizedImage = image.jpeg(.lowest)?.image()?.resizeImage(100,
+                                                                             opaque: true,
+                                                                             contentMode: .scaleAspectFill)
+                
+                self?.image = resizedImage
                 result(true)
             }else {
-//                self?.imageData = nil
                 self?.image = nil
                 result(false)
             }
@@ -57,4 +60,70 @@ extension NewsModel {
         task.resume()
     }
     
+}
+
+
+extension UIImage {
+    enum JPEGQuality: CGFloat {
+        case lowest  = 0
+        case low     = 0.25
+        case medium  = 0.5
+        case high    = 0.75
+        case highest = 1
+    }
+
+    func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
+        return jpegData(compressionQuality: jpegQuality.rawValue)
+    }
+}
+
+extension Data {
+    func image() -> UIImage? {
+        return UIImage.init(data: self)
+    }
+}
+
+
+extension UIImage {
+    func resizeImage(_ dimension: CGFloat, opaque: Bool, contentMode: UIView.ContentMode = .scaleAspectFit) -> UIImage {
+        var width: CGFloat
+        var height: CGFloat
+        var newImage: UIImage
+
+        let size = self.size
+        let aspectRatio =  size.width/size.height
+
+        switch contentMode {
+            case .scaleAspectFit:
+                if aspectRatio > 1 {                            // Landscape image
+                    width = dimension
+                    height = dimension / aspectRatio
+                } else {                                        // Portrait image
+                    height = dimension
+                    width = dimension * aspectRatio
+                }
+            case .scaleAspectFill:
+                height = dimension
+                width = ((size.width) / aspectRatio)/dimension
+        default:
+            fatalError("UIIMage.resizeToFit(): FATAL: Unimplemented ContentMode")
+        }
+
+        if #available(iOS 10.0, *) {
+            let renderFormat = UIGraphicsImageRendererFormat.default()
+            renderFormat.opaque = opaque
+            let renderer = UIGraphicsImageRenderer(size: CGSize(width: width, height: height), format: renderFormat)
+            newImage = renderer.image {
+                (context) in
+                self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+            }
+        } else {
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), opaque, 0)
+                self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+                newImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+        }
+
+        return newImage
+    }
 }

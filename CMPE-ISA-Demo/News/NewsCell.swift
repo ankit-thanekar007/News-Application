@@ -41,16 +41,14 @@ class NewsCell: UITableViewCell {
         if let d = cellData {
             newsTitle.text = d.title
             newLoader.startAnimating()
-            DispatchQueue.global(qos: .userInteractive).async {
-                self.cellData.downloadImage { (result) in
-                    DispatchQueue.main.async {
-                        if result {
-                            if let id = self.cellData.image {
-                                self.newsImage?.image = id           
-                            }
+            self.cellData.downloadImage { (result) in
+                DispatchQueue.main.async {
+                    if result {
+                        if let id = self.cellData.image {
+                            self.newsImage?.image = id
                         }
-                        self.newLoader.stopAnimating()
                     }
+                    self.newLoader.stopAnimating()
                 }
             }
         }

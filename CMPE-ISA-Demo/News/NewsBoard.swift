@@ -23,13 +23,18 @@ class NewsBoard: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search News"
+        searchController.extendedLayoutIncludesOpaqueBars = true;
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
     
     private func fetchNews(){
-        NewsDataController.shared.fetchNews { [weak self] in
-            self?.tableView.reloadSections(IndexSet.init(integer: 0), with: .automatic)
+        NewsDataController.shared.fetchNews { [weak self] (s, e) in
+            var indexPathSet : [IndexPath] = []
+            for i in (s..<e){
+                indexPathSet.append(IndexPath.init(row: i, section: 0))
+            }
+            self?.tableView.insertRows(at: indexPathSet, with: .automatic)
         }
     }
 }
