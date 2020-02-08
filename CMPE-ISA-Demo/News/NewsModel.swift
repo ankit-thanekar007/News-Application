@@ -13,7 +13,7 @@ class NewsModel: NSObject, Codable {
     let author, title, welcomeDescription: String?
     let url: String?
     let urlToImage: String?
-    let publishedAt: String?
+    let publishedAt: String!
     let content: String?
     var imageData : Data?
     var image : UIImage?
@@ -21,10 +21,10 @@ class NewsModel: NSObject, Codable {
     enum CodingKeys: String, CodingKey {
         case source, author, title
         case welcomeDescription = "description"
-        case url, urlToImage, publishedAt, content, imageData
+        case url, urlToImage, publishedAt, content
     }
     
-    init(source: Source?, author: String?, title: String?, welcomeDescription: String?, url: String?, urlToImage: String?, publishedAt: String?, content: String?, imageData : Data?) {
+    init(source: Source?, author: String?, title: String?, welcomeDescription: String?, url: String?, urlToImage: String?, publishedAt: String?, content: String?) {
         self.source = source
         self.author = author
         self.title = title
@@ -33,8 +33,22 @@ class NewsModel: NSObject, Codable {
         self.urlToImage = urlToImage
         self.publishedAt = publishedAt
         self.content = content
-        self.imageData = imageData
     }
+    
+    
+    required init(from decoder : Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        source = try container.decode(Source?.self, forKey: .source)
+        title = try container.decode(String?.self, forKey: .title)
+        welcomeDescription = try container.decode(String?.self, forKey: .welcomeDescription)
+        url = try container.decode(String?.self, forKey: .url)
+        urlToImage = try container.decode(String?.self, forKey: .urlToImage)
+        content = try container.decode(String?.self, forKey: .content)
+        author = try container.decode(String?.self, forKey: .author)
+        let dateString = try container.decode(String.self, forKey: .publishedAt)
+        publishedAt = dateString.formatFromString()
+    }
+    
 }
 
 extension NewsModel {
@@ -46,11 +60,11 @@ extension NewsModel {
         let task = session.dataTask(with: URL.init(string: urlToImage!)!) {[weak self] (data, response, error) in
             if let d = data, let image = UIImage.init(data: d) {
                 
-                let resizedImage = image.jpeg(.lowest)?.image()?.resizeImage(100,
-                                                                             opaque: true,
-                                                                             contentMode: .scaleAspectFill)
+//                let resizedImage = image.jpeg(.lowest)?.image()?.resizeImage(100,
+//                                                                             opaque: true,
+//                                                                             contentMode: .scaleAspectFill)
                 
-                self?.image = resizedImage
+                self?.image = image
                 result(true)
             }else {
                 self?.image = nil
@@ -125,5 +139,19 @@ extension UIImage {
         }
 
         return newImage
+    }
+}
+
+extension String {
+    func formatFromString() -> String {
+        let dateFormatter = DateFormatter()
+        let tempLocale = dateFormatter.locale // save locale temporarily
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = dateFormatter.date(from: self)!
+        dateFormatter.dateFormat = "E, MMM d yyyy"
+        dateFormatter.locale = tempLocale // reset the locale
+        let dateString = dateFormatter.string(from: date)
+        return dateString
     }
 }

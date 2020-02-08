@@ -82,3 +82,4 @@ class NewsDataController: NSObject {
         }
     }
 }
+

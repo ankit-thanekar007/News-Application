@@ -30,11 +30,12 @@ class NewsBoard: UIViewController {
     
     private func fetchNews(){
         NewsDataController.shared.fetchNews { [weak self] (s, e) in
-            var indexPathSet : [IndexPath] = []
-            for i in (s..<e){
-                indexPathSet.append(IndexPath.init(row: i, section: 0))
-            }
-            self?.tableView.insertRows(at: indexPathSet, with: .automatic)
+//            var indexPathSet : [IndexPath] = []
+//            for i in (s..<e){
+//                indexPathSet.append(IndexPath.init(row: 1, section: i))
+//            }
+//            self?.tableView.insertRows(at: indexPathSet, with: .automatic)
+            self?.tableView.reloadData()
         }
     }
 }
@@ -48,44 +49,50 @@ extension NewsBoard: UISearchResultsUpdating {
 extension NewsBoard : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return NewsDataController.shared.collection.articles.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsCell
-        cell.cellData = NewsDataController.shared.collection.articles[indexPath.row]
+        cell.cellData = NewsDataController.shared.collection.articles[indexPath.section]
         cell.setData()
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == (NewsDataController.shared.collection.articles.count - 1) {
+        if indexPath.section == (NewsDataController.shared.collection.articles.count - 1) {
             self.fetchNews()
         }
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if NewsDataController.shared.shouldFetch() {
-            let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 100))
-            view.backgroundColor = .red
-            let activityIndicator = UIActivityIndicatorView.init(style: .whiteLarge)
-            activityIndicator.center = view.center
-            view.addSubview(activityIndicator)
-            activityIndicator.startAnimating()
-            return view
-        }
-        return nil
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return NewsDataController.shared.shouldFetch() ? 100 : 0.0001
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
     }
 }
 
 extension NewsBoard : UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let saveAction = UIContextualAction.init(style: .normal, title: "Save"){
+            (action, view, bool) in
+            print("Saved", indexPath)
+        }
+        saveAction.backgroundColor = UIColor.init(red: 157/255, green: 193/255, blue: 131/255, alpha: 1)
+        return UISwipeActionsConfiguration.init(actions: [saveAction])
+    }
 }

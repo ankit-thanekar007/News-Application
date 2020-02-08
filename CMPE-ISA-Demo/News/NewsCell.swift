@@ -10,11 +10,12 @@ import UIKit
 
 class NewsCell: UITableViewCell {
     
-    @IBOutlet var newsTitle : UILabel!
-    @IBOutlet var newsImage : UIImageView!
-    @IBOutlet var newLoader : UIActivityIndicatorView!
-    @IBOutlet var newsDate : UILabel!
-    @IBOutlet var newsAuthor : UILabel!
+    @IBOutlet private var newsTitle : UILabel!
+    @IBOutlet private var newsDescription : UILabel!
+    @IBOutlet private var newsImage : UIImageView!
+    @IBOutlet private var newLoader : UIActivityIndicatorView!
+    @IBOutlet private var newsDate : UILabel!
+    @IBOutlet private var newsAuthor : UILabel!
     
     var cellData : NewsModel!
     let session = URLSession(configuration: .default)
@@ -40,6 +41,12 @@ class NewsCell: UITableViewCell {
     func setData(){
         if let d = cellData {
             newsTitle.text = d.title
+            newsDescription.text = d.content
+            if let publishd = d.publishedAt, let author = d.author {
+                newsDate.text = "\(publishd) By \(author)"
+            }else {
+                newsDate.text = d.publishedAt
+            }
             newLoader.startAnimating()
             self.cellData.downloadImage { (result) in
                 DispatchQueue.main.async {
