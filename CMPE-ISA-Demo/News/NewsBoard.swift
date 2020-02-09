@@ -8,14 +8,22 @@
 
 import UIKit
 
-class NewsBoard: UIViewController {
+class NewsBoard: ParentController {
     
     private let searchController = UISearchController(searchResultsController: nil)
+    private var lastRefreshDate : Date!
+    
     @IBOutlet private var tableView : UITableView!
+    @IBOutlet private var loadingFooterHeight : NSLayoutConstraint!
+    
+    lazy var articles = {
+        return NewsDataController.shared.collection.articles
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
+        configureRefreshControl()
         fetchNews()
     }
     
@@ -28,14 +36,21 @@ class NewsBoard: UIViewController {
         definesPresentationContext = true
     }
     
-    private func fetchNews(){
+    private func configureRefreshControl () {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString.init(string: "Last Refreshed At")
+        tableView.refreshControl = refreshControl
+        tableView.refreshControl?.addTarget(self, action: #selector(fetchNews),
+                                            for: .valueChanged)
+    }
+    
+    @objc private func fetchNews(){
         NewsDataController.shared.fetchNews { [weak self] (s, e) in
-//            var indexPathSet : [IndexPath] = []
-//            for i in (s..<e){
-//                indexPathSet.append(IndexPath.init(row: 1, section: i))
-//            }
-//            self?.tableView.insertRows(at: indexPathSet, with: .automatic)
-            self?.tableView.reloadData()
+            var indexPathSet : [Int] = []
+            for i in (s..<e){indexPathSet.append(i)}
+            self?.tableView.insertSections(IndexSet.init(indexPathSet), with: .fade)
+            self?.tableView.refreshControl?.endRefreshing()
+            UIView.animate(withDuration: 0.5) { self?.loadingFooterHeight.constant = 0 }
         }
     }
 }
@@ -59,7 +74,7 @@ extension NewsBoard : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsCell
-        cell.cellData = NewsDataController.shared.collection.articles[indexPath.section]
+        cell.cellData = articles()[indexPath.section]
         cell.setData()
         return cell
     }
@@ -69,7 +84,10 @@ extension NewsBoard : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.section == (NewsDataController.shared.collection.articles.count - 1) {
+        if indexPath.section == (articles().count - 1) {
+            UIView.animate(withDuration: 0.5) {
+                self.loadingFooterHeight.constant = 50
+            }
             self.fetchNews()
         }
     }
@@ -86,13 +104,5 @@ extension NewsBoard : UITableViewDataSource {
 }
 
 extension NewsBoard : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        let saveAction = UIContextualAction.init(style: .normal, title: "Save"){
-            (action, view, bool) in
-            print("Saved", indexPath)
-        }
-        saveAction.backgroundColor = UIColor.init(red: 157/255, green: 193/255, blue: 131/255, alpha: 1)
-        return UISwipeActionsConfiguration.init(actions: [saveAction])
-    }
+    
 }

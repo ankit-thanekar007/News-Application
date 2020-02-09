@@ -32,8 +32,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q6N-wp-XSx">
-                                <rect key="frame" x="8" y="88" width="398" height="725"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q6N-wp-XSx">
+                                <rect key="frame" x="8" y="88" width="398" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsCell" rowHeight="366" id="uxi-dm-I0j" customClass="NewsCell" customModule="CMPE_ISA_Demo" customModuleProvider="target">
@@ -46,7 +46,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KLc-7C-FuH">
                                                     <rect key="frame" x="0.0" y="0.0" width="398" height="326.5"/>
                                                     <subviews>
-                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Hrt-tM-C0b">
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Hrt-tM-C0b">
                                                             <rect key="frame" x="20" y="0.0" width="358" height="200"/>
                                                         </activityIndicatorView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1go-1b-a2c">
@@ -122,18 +122,29 @@
                                     <outlet property="delegate" destination="oxu-k1-NVH" id="TWc-BN-R1u"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEs-Mf-TpL" customClass="LoadingFooter" customModule="CMPE_ISA_Demo" customModuleProvider="target">
+                                <rect key="frame" x="8" y="763" width="398" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="m3v-xX-8Oh"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.85567321743763669" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="b5o-09-GbX" firstAttribute="trailing" secondItem="uEs-Mf-TpL" secondAttribute="trailing" constant="8" id="3j4-s0-cb7"/>
+                            <constraint firstItem="uEs-Mf-TpL" firstAttribute="top" secondItem="Q6N-wp-XSx" secondAttribute="bottom" constant="8" symbolic="YES" id="4eU-H0-bLG"/>
                             <constraint firstItem="Q6N-wp-XSx" firstAttribute="leading" secondItem="b5o-09-GbX" secondAttribute="leading" constant="8" id="8u5-jH-L8q"/>
                             <constraint firstItem="b5o-09-GbX" firstAttribute="trailing" secondItem="Q6N-wp-XSx" secondAttribute="trailing" constant="8" id="DK1-dY-xXb"/>
-                            <constraint firstItem="b5o-09-GbX" firstAttribute="bottom" secondItem="Q6N-wp-XSx" secondAttribute="bottom" id="O4k-g7-cTg"/>
+                            <constraint firstItem="b5o-09-GbX" firstAttribute="bottom" secondItem="uEs-Mf-TpL" secondAttribute="bottom" id="Gdx-Pe-IE5"/>
+                            <constraint firstItem="uEs-Mf-TpL" firstAttribute="leading" secondItem="b5o-09-GbX" secondAttribute="leading" constant="8" id="eDf-co-hDn"/>
                             <constraint firstItem="Q6N-wp-XSx" firstAttribute="top" secondItem="b5o-09-GbX" secondAttribute="top" id="pb7-Ty-tTU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b5o-09-GbX"/>
                     </view>
                     <navigationItem key="navigationItem" title="News Hub" id="fzw-q2-i6I"/>
                     <connections>
+                        <outlet property="loadingFooterHeight" destination="m3v-xX-8Oh" id="qNK-x4-bNQ"/>
                         <outlet property="tableView" destination="Q6N-wp-XSx" id="AkQ-F4-Imn"/>
                         <segue destination="nEK-0c-vZr" kind="show" identifier="NewsDetail" id="Vd6-36-1eO"/>
                     </connections>
