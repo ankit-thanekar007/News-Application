@@ -59,11 +59,9 @@ extension NewsModel {
         let session = URLSession.init(configuration: .default)
         let task = session.dataTask(with: URL.init(string: urlToImage!)!) {[weak self] (data, response, error) in
             if let d = data, let image = UIImage.init(data: d) {
-                
 //                let resizedImage = image.jpeg(.lowest)?.image()?.resizeImage(100,
 //                                                                             opaque: true,
 //                                                                             contentMode: .scaleAspectFill)
-                
                 self?.image = image
                 result(true)
             }else {
@@ -148,10 +146,12 @@ extension String {
         let tempLocale = dateFormatter.locale // save locale temporarily
         dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let date = dateFormatter.date(from: self)!
-        dateFormatter.dateFormat = "E, MMM d yyyy"
-        dateFormatter.locale = tempLocale // reset the locale
-        let dateString = dateFormatter.string(from: date)
-        return dateString
+        if let date = dateFormatter.date(from: self) {
+            dateFormatter.dateFormat = "E, MMM d yyyy"
+            dateFormatter.locale = tempLocale // reset the locale
+            let dateString = dateFormatter.string(from: date)
+            return dateString
+        }
+        return self
     }
 }

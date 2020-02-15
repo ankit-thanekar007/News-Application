@@ -15,11 +15,11 @@ class NewsCell: UITableViewCell {
     @IBOutlet private var newsImage : UIImageView!
     @IBOutlet private var newLoader : UIActivityIndicatorView!
     @IBOutlet private var newsDate : UILabel!
-    @IBOutlet private var newsAuthor : UILabel!
+    @IBOutlet private var offlineStatus : UIImageView!
     
     var cellData : NewsModel!
     let session = URLSession(configuration: .default)
-    
+    var isSaved : Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -35,7 +35,9 @@ class NewsCell: UITableViewCell {
     
     override func prepareForReuse() {
         newsImage.image = nil
+        offlineStatus.image = nil
         newsTitle.text = ""
+        isSaved = false
     }
     
     func setData(){
@@ -47,16 +49,41 @@ class NewsCell: UITableViewCell {
             }else {
                 newsDate.text = d.publishedAt
             }
-            newLoader.startAnimating()
-            self.cellData.downloadImage { (result) in
-                DispatchQueue.main.async {
-                    if result {
-                        if let id = self.cellData.image {
-                            self.newsImage?.image = id
-                        }
+            downloadMedia()
+            if((NewsManager.fetchNews(d)) != nil) {
+                offlineStatus.image = UIImage.init(named: "saved")
+                isSaved = true
+            }else {
+                offlineStatus.image = UIImage.init(named: "unsaved")
+                isSaved = false
+            }
+        }
+    }
+    
+    func downloadMedia(){
+        newLoader.startAnimating()
+        self.cellData.downloadImage { (result) in
+            DispatchQueue.main.async {
+                if result {
+                    if let id = self.cellData.image {
+                        self.newsImage?.image = id
                     }
-                    self.newLoader.stopAnimating()
                 }
+                self.newLoader.stopAnimating()
+            }
+        }
+    }
+    
+    @IBAction func changeOfflineStatus(_ view : UIControl){
+        if(isSaved) {
+            if NewsManager.deleteNews(self.cellData) {
+                offlineStatus.image = UIImage.init(named: "unsaved")
+                isSaved = false
+            }
+        }else {
+            if NewsManager.saveNews(self.cellData) {
+                offlineStatus.image = UIImage.init(named: "saved")
+                isSaved = true
             }
         }
     }

@@ -19,12 +19,22 @@ protocol LocationDelegate {
 class LocationManager: NSObject {
     
     private let manager = CLLocationManager.init()
-    var currentLocation : CLLocation?
+    var currentLocation : CLLocation? {
+        didSet {
+            if let loc = currentLocation{
+                delegate?.locationUpdatedTo(loc: loc)
+            }
+        }
+    }
     var delegate : LocationDelegate?
+    
+    override init() {
+        super.init()
+        initializeLocationManager()
+    }
     
     func initializeLocationManager() {
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        
         manager.delegate = self
     }
     
@@ -36,17 +46,14 @@ class LocationManager: NSObject {
             if CLLocationManager.locationServicesEnabled() {
                 manager.startUpdatingLocation()
             }
-        case .restricted, .denied:
-            manager.requestWhenInUseAuthorization()
+        case .restricted:
+            delegate?.restrictedLocation()
+        case .denied:
+            delegate?.deniedLocation()
         @unknown default:
-            manager.requestWhenInUseAuthorization()
+            delegate?.deniedLocation()
         }
     }
-    
-    func alertForLocationUsage()  {
-        
-    }
-    
 }
 
 extension LocationManager : CLLocationManagerDelegate {

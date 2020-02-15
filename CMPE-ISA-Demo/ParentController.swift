@@ -38,7 +38,7 @@ class ParentController: UIViewController {
 extension ParentController : LocationDelegate {
     
     func locationUpdatedTo(loc: CLLocation) {
-        
+        print(loc)
     }
     
     func deniedLocation() {

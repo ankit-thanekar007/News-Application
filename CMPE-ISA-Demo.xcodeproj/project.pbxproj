@@ -24,6 +24,7 @@
 		BC653E8C23E5605A00A82B0E /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E8B23E5605A00A82B0E /* NewsCell.swift */; };
 		BC6A16AA23EFA59500563994 /* LoadingFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6A16A823EFA59500563994 /* LoadingFooter.swift */; };
 		BC6A16AB23EFA59500563994 /* LoadingFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC6A16A923EFA59500563994 /* LoadingFooter.xib */; };
+		BCF03F2A23F8919C008C1145 /* NewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF03F2923F8919C008C1145 /* NewsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		BC653E8B23E5605A00A82B0E /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		BC6A16A823EFA59500563994 /* LoadingFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooter.swift; sourceTree = "<group>"; };
 		BC6A16A923EFA59500563994 /* LoadingFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingFooter.xib; sourceTree = "<group>"; };
+		BCF03F2923F8919C008C1145 /* NewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 		BC653E6623E27A0F00A82B0E /* CMPE-ISA-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				BCF03F2823F89168008C1145 /* Database */,
 				BC3AFB2523EF6A3B00390404 /* ParentController.swift */,
 				BC3AFB2223EF668200390404 /* Utils */,
 				BC653E6723E27A1000A82B0E /* AppDelegate.swift */,
@@ -122,6 +125,14 @@
 				BC6A16A923EFA59500563994 /* LoadingFooter.xib */,
 			);
 			path = "Loading Footer";
+			sourceTree = "<group>";
+		};
+		BCF03F2823F89168008C1145 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				BCF03F2923F8919C008C1145 /* NewsManager.swift */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 				BC653E7F23E433AD00A82B0E /* NewsBoard.swift in Sources */,
 				BC653E8123E4355400A82B0E /* NewsModel.swift in Sources */,
 				BC653E8A23E43F9D00A82B0E /* NewsCollection.swift in Sources */,
+				BCF03F2A23F8919C008C1145 /* NewsManager.swift in Sources */,
 				BC3AFB2623EF6A3B00390404 /* ParentController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

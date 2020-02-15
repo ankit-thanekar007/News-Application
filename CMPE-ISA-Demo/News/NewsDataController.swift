@@ -8,6 +8,13 @@
 
 import UIKit
 
+enum SortOptions : String {
+    case relevancy = "relevancy"
+    case popularity = "popularity"
+    case publishedAt = "publishedAt"
+}
+
+
 class NewsDataController: NSObject {
     let wrapper = Wrapper.init()
     var pageNumber = 1
@@ -15,9 +22,14 @@ class NewsDataController: NSObject {
     var collection = NewsCollection.init(articles: [], results: -1)
     static let shared = NewsDataController.init()
     
-    private func generateURL() -> String {
-        var base = "https://newsapi.org/v2/top-headlines?country=us&apiKey=404fcb2608764b3983f73c8a4119b20d"
+    private func generateURL(searchText : String, sortBy : SortOptions) -> String {
+        var base = "http://newsapi.org/v2/everything?apiKey=404fcb2608764b3983f73c8a4119b20d"
         base += "&page=\(pageNumber)"
+        if(!searchText.isEmpty) {
+            base += "&q=\(searchText)"
+        }
+        base += "&sortBy=\(sortBy.rawValue)"
+        
         pageNumber+=1
         print("######### \(base) ########")
         return base
@@ -30,7 +42,7 @@ class NewsDataController: NSObject {
         return false
     }
     
-    func fetchNews( response : @escaping (((s : Int, e : Int))->Void)) {
+    func fetchNews(searchText : String, sortBy : SortOptions, response : @escaping (((s : Int, e : Int))->Void)) {
         let nR = NewsRequest.init(
             response: {[weak self] (data, error) in
                 if let e = error {
@@ -42,7 +54,7 @@ class NewsDataController: NSObject {
                     }
                 }
             },
-            url: self.generateURL(),
+            url: self.generateURL(searchText: searchText, sortBy: sortBy),
             headers: nil,
             data: nil)
         
