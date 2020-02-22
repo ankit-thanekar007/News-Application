@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		BC3AFB2423EF66A300390404 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AFB2323EF66A300390404 /* LocationManager.swift */; };
 		BC3AFB2623EF6A3B00390404 /* ParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AFB2523EF6A3B00390404 /* ParentController.swift */; };
+		BC5D96402401D20900F8254D /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC5D963F2401D20900F8254D /* NewsCell.xib */; };
+		BC5D96432401D4BB00F8254D /* NoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D96412401D4BB00F8254D /* NoDataView.swift */; };
+		BC5D96442401D4BB00F8254D /* NoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC5D96422401D4BB00F8254D /* NoDataView.xib */; };
+		BC5D96472401DC8200F8254D /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5D96462401DC8200F8254D /* UserDetails.swift */; };
 		BC653E6823E27A1000A82B0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E6723E27A1000A82B0E /* AppDelegate.swift */; };
 		BC653E6A23E27A1000A82B0E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E6923E27A1000A82B0E /* SceneDelegate.swift */; };
 		BC653E6F23E27A1000A82B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC653E6D23E27A1000A82B0E /* Main.storyboard */; };
@@ -30,6 +34,10 @@
 /* Begin PBXFileReference section */
 		BC3AFB2323EF66A300390404 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		BC3AFB2523EF6A3B00390404 /* ParentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentController.swift; sourceTree = "<group>"; };
+		BC5D963F2401D20900F8254D /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
+		BC5D96412401D4BB00F8254D /* NoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataView.swift; sourceTree = "<group>"; };
+		BC5D96422401D4BB00F8254D /* NoDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoDataView.xib; sourceTree = "<group>"; };
+		BC5D96462401DC8200F8254D /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		BC653E6423E27A0F00A82B0E /* CMPE-ISA-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CMPE-ISA-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC653E6723E27A1000A82B0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC653E6923E27A1000A82B0E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,8 +74,26 @@
 			children = (
 				BC3AFB2323EF66A300390404 /* LocationManager.swift */,
 				BC6A16A523EFA50D00563994 /* Loading Footer */,
+				BC5D96452401D4C700F8254D /* NoData View */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		BC5D96452401D4C700F8254D /* NoData View */ = {
+			isa = PBXGroup;
+			children = (
+				BC5D96412401D4BB00F8254D /* NoDataView.swift */,
+				BC5D96422401D4BB00F8254D /* NoDataView.xib */,
+			);
+			path = "NoData View";
+			sourceTree = "<group>";
+		};
+		BC5D96482401DC8A00F8254D /* User Details */ = {
+			isa = PBXGroup;
+			children = (
+				BC5D96462401DC8200F8254D /* UserDetails.swift */,
+			);
+			path = "User Details";
 			sourceTree = "<group>";
 		};
 		BC653E5B23E27A0F00A82B0E = {
@@ -89,6 +115,7 @@
 		BC653E6623E27A0F00A82B0E /* CMPE-ISA-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				BC5D96482401DC8A00F8254D /* User Details */,
 				BCF03F2823F89168008C1145 /* Database */,
 				BC3AFB2523EF6A3B00390404 /* ParentController.swift */,
 				BC3AFB2223EF668200390404 /* Utils */,
@@ -114,6 +141,7 @@
 				BC653E8023E4355400A82B0E /* NewsModel.swift */,
 				BC653E8923E43F9D00A82B0E /* NewsCollection.swift */,
 				BC653E8223E435E600A82B0E /* Source.swift */,
+				BC5D963F2401D20900F8254D /* NewsCell.xib */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -195,6 +223,8 @@
 			files = (
 				BC653E7723E27A1500A82B0E /* LaunchScreen.storyboard in Resources */,
 				BC653E7423E27A1500A82B0E /* Assets.xcassets in Resources */,
+				BC5D96402401D20900F8254D /* NewsCell.xib in Resources */,
+				BC5D96442401D4BB00F8254D /* NoDataView.xib in Resources */,
 				BC653E6F23E27A1000A82B0E /* Main.storyboard in Resources */,
 				BC6A16AB23EFA59500563994 /* LoadingFooter.xib in Resources */,
 			);
@@ -208,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC653E6823E27A1000A82B0E /* AppDelegate.swift in Sources */,
+				BC5D96472401DC8200F8254D /* UserDetails.swift in Sources */,
 				BC653E8723E436F000A82B0E /* Wrapper.swift in Sources */,
 				BC6A16AA23EFA59500563994 /* LoadingFooter.swift in Sources */,
 				BC653E6A23E27A1000A82B0E /* SceneDelegate.swift in Sources */,
@@ -217,6 +248,7 @@
 				BC653E8523E4365700A82B0E /* NewsDataController.swift in Sources */,
 				BC653E7223E27A1000A82B0E /* CMPE_ISA_Demo.xcdatamodeld in Sources */,
 				BC653E7F23E433AD00A82B0E /* NewsBoard.swift in Sources */,
+				BC5D96432401D4BB00F8254D /* NoDataView.swift in Sources */,
 				BC653E8123E4355400A82B0E /* NewsModel.swift in Sources */,
 				BC653E8A23E43F9D00A82B0E /* NewsCollection.swift in Sources */,
 				BCF03F2A23F8919C008C1145 /* NewsManager.swift in Sources */,

@@ -14,6 +14,8 @@ enum SortOptions : String {
     case publishedAt = "publishedAt"
 }
 
+let BASE_URL : String = "http://newsapi.org/v2"
+let API_KEY : String = "404fcb2608764b3983f73c8a4119b20d"
 
 class NewsDataController: NSObject {
     let wrapper = Wrapper.init()
@@ -22,14 +24,13 @@ class NewsDataController: NSObject {
     var collection = NewsCollection.init(articles: [], results: -1)
     static let shared = NewsDataController.init()
     
-    private func generateURL(searchText : String, sortBy : SortOptions) -> String {
-        var base = "http://newsapi.org/v2/everything?apiKey=404fcb2608764b3983f73c8a4119b20d"
-        base += "&page=\(pageNumber)"
-        if(!searchText.isEmpty) {
-            base += "&q=\(searchText)"
+    private func generateURL(searchText : String,
+                             sortBy : SortOptions,
+                             resetPage : Bool) -> String {
+        if(resetPage){
+            pageNumber = 1
         }
-        base += "&sortBy=\(sortBy.rawValue)"
-        
+        let base = "\(BASE_URL)/everything?apiKey=\(API_KEY)&page=\(pageNumber)&q=\(searchText)&sortBy=\(sortBy.rawValue)"
         pageNumber+=1
         print("######### \(base) ########")
         return base
@@ -42,7 +43,9 @@ class NewsDataController: NSObject {
         return false
     }
     
-    func fetchNews(searchText : String, sortBy : SortOptions, response : @escaping (((s : Int, e : Int))->Void)) {
+    func fetchNews(searchText : String, sortBy : SortOptions,
+                   resetPage : Bool = false,
+                   response : @escaping (((s : Int, e : Int))->Void)) {
         let nR = NewsRequest.init(
             response: {[weak self] (data, error) in
                 if let e = error {
@@ -50,23 +53,26 @@ class NewsDataController: NSObject {
                     print("Failed to fetch news" + e.localizedDescription)
                 }else {
                     if let d = data as? Data{
-                        response(self!.mapToLocal(data: d))
+                        response(self!.mapToLocal(data: d, reset: resetPage))
                     }
                 }
             },
-            url: self.generateURL(searchText: searchText, sortBy: sortBy),
+            url: self.generateURL(searchText: searchText, sortBy: sortBy, resetPage: resetPage),
             headers: nil,
             data: nil)
         
         wrapper.GET(r: nR);
     }
     
+    func removeArticles() {
+        collection.articles.removeAll()
+    }
     
-    func mapToLocal(data : Data) -> (s : Int, e : Int)  {
+    func mapToLocal(data : Data, reset : Bool) -> (s : Int, e : Int)  {
         let decoder = JSONDecoder()
         do {
             let decoded = try decoder.decode(NewsCollection.self, from: data)
-            if(collection.totalResults == -1) {
+            if(collection.totalResults == -1 || reset) {
                 collection = decoded
                 return (s : 0, e : collection.articles.count)
             }else {

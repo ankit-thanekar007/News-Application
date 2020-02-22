@@ -1,23 +1,18 @@
 //
-//  LoadingFooter.swift
+//  NoDataView.swift
 //  CMPE-ISA-Demo
 //
-//  Created by Ankit Thanekar on 08/02/20.
+//  Created by Ankit Thanekar on 22/02/20.
 //  Copyright © 2020 Ankit Thanekar. All rights reserved.
 //
 
 import UIKit
 
-class LoadingFooter: UIView {
-    @IBOutlet private var activityIndicator : UIActivityIndicatorView!
-    @IBInspectable var loaderBackground : UIColor = .white
+class NoDataView: UIView {
+    @IBOutlet private var image : UIImageView!
+    @IBOutlet private var textLabel : UILabel!
     
     private var containerView : UIView!
-    
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        self.backgroundColor = loaderBackground
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,10 +25,9 @@ class LoadingFooter: UIView {
     }
     
     private func commonInit() {
+        let nib = UINib(nibName: "NoDataView", bundle: .main)
+        containerView = nib.instantiate(withOwner: self, options: nil)[0] as? UIView
         
-        let nib = UINib(nibName: "LoadingFooter", bundle: .main)
-        containerView = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
-
         self.addSubview(self.containerView)
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -43,23 +37,4 @@ class LoadingFooter: UIView {
             self.containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
     }
-    
-    func startLoading(){
-        activityIndicator.startAnimating()
-    }
-    
-    func stopLoading(){
-        activityIndicator.stopAnimating()
-    }
-}
-
-
-
-extension UIView {
-    
-    func fromNib<T : UIView>(view : T) -> T? {
-        let nib = UINib(nibName: String(describing: T.self), bundle: nil)
-        return nib.instantiate(withOwner: self, options: nil).first as? T
-    }
-    
 }

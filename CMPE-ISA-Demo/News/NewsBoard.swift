@@ -12,7 +12,7 @@ class NewsBoard: ParentController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastRefreshDate : Date!
-    
+    private let dataController = NewsDataController.shared
     private var isSearchBarEmpty: Bool {
       return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -23,6 +23,12 @@ class NewsBoard: ParentController {
       return searchController.isActive &&
         (!isSearchBarEmpty || searchBarScopeIsFiltering)
     }
+    
+    private var isSearching : Bool  {
+        return searchController.isActive && (!isSearchBarEmpty)
+    }
+    
+    private var isFetching : Bool = false
     
     private var filterType: SortOptions {
         switch searchController.searchBar.selectedScopeButtonIndex {
@@ -39,6 +45,8 @@ class NewsBoard: ParentController {
     
     @IBOutlet private var tableView : UITableView!
     @IBOutlet private var loadingFooterHeight : NSLayoutConstraint!
+    @IBOutlet private var loaderView : LoadingFooter!
+    @IBOutlet private var backgroundView : NoDataView!
     
     lazy var articles = {
         return NewsDataController.shared.collection.articles
@@ -49,6 +57,7 @@ class NewsBoard: ParentController {
         setupSearchController()
         configureRefreshControl()
         fetchNews()
+        self.tableView.register(UINib.init(nibName: "NewsCell", bundle: Bundle.main), forCellReuseIdentifier: "NewsCell")
     }
     
     private func setupSearchController() {
@@ -69,22 +78,43 @@ class NewsBoard: ParentController {
         let lastUpdate = "Last updated at" + "\(Date())".formatFromString()
         refreshControl.attributedTitle = NSAttributedString.init(string: lastUpdate)
         tableView.refreshControl = refreshControl
-        tableView.refreshControl?.addTarget(self, action: #selector(fetchNews),
+        tableView.refreshControl?.addTarget(self, action: #selector(fetch),
                                             for: .valueChanged)
     }
     
-    @objc private func fetchNews(searchText : String = "SJSU"){
-        NewsDataController.shared.fetchNews(searchText: searchText, sortBy: filterType) { [weak self] (s, e) in
+    @objc func fetch(){
+        self.fetchNews()
+    }
+    
+    @objc func fetchNews(searchText : String = "SJSU"){
+        if(isFetching) {
+             return
+        }
+        self.isFetching = true;
+        if((self.isSearching || self.isFiltering)) {
+            var prevIndexPathSet : [Int] = []
+            for i in (0..<articles().count){prevIndexPathSet.append(i)}
+            self.tableView.performBatchUpdates({
+                self.dataController.removeArticles()
+                self.tableView.deleteSections(IndexSet.init(prevIndexPathSet), with: .top)
+            }, completion: { (completed) in
+                
+            })
+        }
+        
+        NewsDataController.shared.fetchNews(searchText: searchText,
+                                            sortBy: filterType,
+                                            resetPage: isSearching || isFiltering)
+        { [weak self] (s, e) in
+            
             var indexPathSet : [Int] = []
             for i in (s..<e){indexPathSet.append(i)}
             self?.tableView.insertSections(IndexSet.init(indexPathSet), with: .fade)
             self?.tableView.refreshControl?.endRefreshing()
+            self?.isFetching = false;
+            self?.loaderView.stopLoading()
             UIView.animate(withDuration: 0.5) { self?.loadingFooterHeight.constant = 0 }
         }
-    }
-    
-    func filterContentForSearchText(_ searchText: String) {
-        
     }
 }
 
@@ -97,7 +127,9 @@ extension NewsBoard: UISearchResultsUpdating {
 extension NewsBoard : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar,
                    selectedScopeButtonIndexDidChange selectedScope: Int) {
-        print(selectedScope)
+        let searchText = searchBar.text
+        
+        self.fetchNews(searchText: searchText ?? "SJSU")
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -114,9 +146,9 @@ extension NewsBoard : UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return NewsDataController.shared.collection.articles.count
+        tableView.backgroundView = articles().count > 0 ? nil : backgroundView
+        return articles().count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsCell
@@ -131,8 +163,10 @@ extension NewsBoard : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.section == (articles().count - 1) {
+            print(indexPath.section)
             UIView.animate(withDuration: 0.5) {
                 self.loadingFooterHeight.constant = 50
+                self.loaderView.startLoading()
             }
             self.fetchNews()
         }
