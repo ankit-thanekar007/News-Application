@@ -62,7 +62,7 @@ class NewsManager: NSObject {
         return nil
     }
     
-    static func fetchAll()->[News]{
+    static func fetchAll()->[NewsModel]{
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate
             else {
                 return []
@@ -72,13 +72,31 @@ class NewsManager: NSObject {
             do {
                 let fetchResult = try managedContext.fetch(fetchRequest)
                 if let result = fetchResult as? [News] {
-                    return result
+                    return mapToLocal(news: result)
                 }
             } catch let error {
                 print(error)
             }
         return []
     }
+    
+    static func mapToLocal(news : [News]) -> [NewsModel] {
+        var localNews : [NewsModel] = []
+        for newsObject in news {
+            let newsmodel = NewsModel.init(source: Source.init(id: newsObject.newsSource?.id,
+                                                               name: newsObject.newsSource?.name),
+                                           author: newsObject.author,
+                                           title: newsObject.title,
+                                           welcomeDescription: newsObject.welcomeDescription,
+                                           url: newsObject.url,
+                                           urlToImage: newsObject.urlToImage,
+                                           publishedAt: newsObject.publishedAt,
+                                           content: newsObject.content)
+            localNews.append(newsmodel)
+        }
+        return localNews
+    }
+    
     
     static func deleteNews(_ newsModel : NewsModel)-> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate

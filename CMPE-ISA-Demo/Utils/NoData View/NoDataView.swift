@@ -12,7 +12,16 @@ class NoDataView: UIView {
     @IBOutlet private var image : UIImageView!
     @IBOutlet private var textLabel : UILabel!
     
+    @IBInspectable var descriptionText : String = ""
+    
     private var containerView : UIView!
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        if(!descriptionText.isEmpty) {
+            textLabel.text = descriptionText
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

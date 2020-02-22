@@ -17,24 +17,41 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HTF-DY-BSD">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="8" y="88" width="398" height="725"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="E4n-rH-3NN" id="O7U-uU-gV2"/>
+                                    <outlet property="delegate" destination="E4n-rH-3NN" id="jHG-Si-kq6"/>
+                                </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.85999999999999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="HTF-DY-BSD" firstAttribute="leading" secondItem="cPj-sm-KA2" secondAttribute="leading" id="7SC-KJ-GCF"/>
-                            <constraint firstItem="cPj-sm-KA2" firstAttribute="trailing" secondItem="HTF-DY-BSD" secondAttribute="trailing" id="863-HR-RFI"/>
+                            <constraint firstItem="HTF-DY-BSD" firstAttribute="leading" secondItem="cPj-sm-KA2" secondAttribute="leading" constant="8" id="7SC-KJ-GCF"/>
+                            <constraint firstItem="cPj-sm-KA2" firstAttribute="trailing" secondItem="HTF-DY-BSD" secondAttribute="trailing" constant="8" id="863-HR-RFI"/>
                             <constraint firstItem="cPj-sm-KA2" firstAttribute="bottom" secondItem="HTF-DY-BSD" secondAttribute="bottom" id="Rdv-tX-vLc"/>
                             <constraint firstItem="HTF-DY-BSD" firstAttribute="top" secondItem="cPj-sm-KA2" secondAttribute="top" id="sIl-ke-vaa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cPj-sm-KA2"/>
                     </view>
                     <navigationItem key="navigationItem" id="K2p-gx-ECT"/>
+                    <connections>
+                        <outlet property="backgroundView" destination="Pc0-Jy-SZs" id="QN2-gs-zoq"/>
+                        <outlet property="tableView" destination="HTF-DY-BSD" id="7ks-2S-Dih"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OJ0-Nb-vMR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Pc0-Jy-SZs" customClass="NoDataView" customModule="CMPE_ISA_Demo" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="y6L-Mx-iMJ"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="descriptionText" value="No offline news found! Add one to read it later! "/>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1490" y="382"/>
+            <point key="canvasLocation" x="1490" y="515"/>
         </scene>
         <!--News Hub-->
         <scene sceneID="kbv-bH-roQ">
@@ -60,7 +77,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.85567321743763669" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.85999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="b5o-09-GbX" firstAttribute="trailing" secondItem="uEs-Mf-TpL" secondAttribute="trailing" constant="8" id="3j4-s0-cb7"/>
                             <constraint firstItem="uEs-Mf-TpL" firstAttribute="top" secondItem="Q6N-wp-XSx" secondAttribute="bottom" constant="8" symbolic="YES" id="4eU-H0-bLG"/>
@@ -167,7 +184,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZf-Yv-mwk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="813.04347826086962" y="382.36607142857139"/>
+            <point key="canvasLocation" x="813" y="515"/>
         </scene>
     </scenes>
     <resources>
