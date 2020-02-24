@@ -60,7 +60,6 @@ class NewsDataController: NSObject {
             url: self.generateURL(searchText: searchText, sortBy: sortBy, resetPage: resetPage),
             headers: nil,
             data: nil)
-        
         wrapper.GET(r: nR);
     }
     
@@ -101,3 +100,14 @@ class NewsDataController: NSObject {
     }
 }
 
+extension Date {
+    func currentDateString() -> String {
+        let dateFormatter = DateFormatter()
+        let tempLocale = dateFormatter.locale // save locale temporarily
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.dateFormat = "E, MMM d HH:mm:ss"
+        dateFormatter.locale = tempLocale // reset the locale
+        let dateString = dateFormatter.string(from: self)
+        return dateString
+    }
+}

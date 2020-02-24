@@ -64,6 +64,9 @@
                                 <constraint firstItem="b4U-8u-xac" firstAttribute="top" secondItem="UMG-eH-sMW" secondAttribute="top" id="bCz-i3-NWa"/>
                                 <constraint firstAttribute="bottom" secondItem="b4U-8u-xac" secondAttribute="bottom" id="rHf-8Q-01i"/>
                             </constraints>
+                            <connections>
+                                <action selector="changeOfflineStatus:" destination="iN0-l3-epB" eventType="touchUpInside" id="Uz8-ii-5Vl"/>
+                            </connections>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

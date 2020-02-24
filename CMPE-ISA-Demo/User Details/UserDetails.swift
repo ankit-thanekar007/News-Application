@@ -10,8 +10,33 @@ import UIKit
 import CoreData
 
 class UserDetails: UIViewController {
+    
     @IBOutlet private var tableView : UITableView!
     @IBOutlet private var backgroundView : NoDataView!
+    
+    private let persistentContainer = NSPersistentContainer(name: "CMPE_ISA_Demo")
+    
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<News> = {
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest<News> = News.fetchRequest()
+
+        // Configure Fetch Request
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        managedContext.automaticallyMergesChangesFromParent = true
+        // Create Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                    managedObjectContext: managedContext,
+                                    sectionNameKeyPath: nil, cacheName: nil)
+
+        // Configure Fetched Results Controller
+
+        return fetchedResultsController
+    }()
+    
     
     lazy var articles = {
         return NewsManager.fetchAll()
@@ -20,11 +45,40 @@ class UserDetails: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UINib.init(nibName: "NewsCell", bundle: Bundle.main), forCellReuseIdentifier: "NewsCell")
+        persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
+            if let error = error {
+                print("Unable to Load Persistent Store")
+                print("\(error), \(error.localizedDescription)")
+            } else {
+                self.loadOfflineData()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        fetchedResultsController.delegate = nil
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchedResultsController.delegate = self
+        loadOfflineData()
         self.tableView.reloadData()
+    }
+    
+    private func loadOfflineData(){
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch {
+            let fetchError = error as NSError
+            print("Unable to Perform Fetch Request")
+            print("\(fetchError), \(fetchError.localizedDescription)")
+        }
     }
 }
 
@@ -35,13 +89,14 @@ extension UserDetails : UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        tableView.backgroundView = articles().count > 0 ? nil : backgroundView
-        return articles().count
+        guard let news = fetchedResultsController.fetchedObjects else {return 0}
+        tableView.backgroundView = news.count > 0 ? nil : backgroundView
+        return news.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsCell
-        cell.cellData = articles()[indexPath.section]
+        cell.cellData = mapToLocal(newsObject: (fetchedResultsController.fetchedObjects?[indexPath.section])!)
         cell.setData()
         return cell
     }
@@ -49,16 +104,6 @@ extension UserDetails : UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.section == (articles().count - 1) {
-//            print(indexPath.section)
-//            UIView.animate(withDuration: 0.5) {
-//                
-//            }
-//            self.fetchNews()
-//        }
-//    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -69,9 +114,63 @@ extension UserDetails : UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
+    
+    func mapToLocal(newsObject : News) -> NewsModel {
+        let newsmodel = NewsModel.init(source: Source.init(id: newsObject.newsSource?.id,
+                                                           name: newsObject.newsSource?.name),
+                                       author: newsObject.author,
+                                       title: newsObject.title,
+                                       welcomeDescription: newsObject.welcomeDescription,
+                                       url: newsObject.url,
+                                       urlToImage: newsObject.urlToImage,
+                                       publishedAt: newsObject.publishedAt,
+                                       content: newsObject.content)
+        
+        return newsmodel
+    }
 }
 
-extension UserDetails : UITableViewDelegate {
-    
+extension UserDetails: NSFetchedResultsControllerDelegate {
+
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        tableView.beginUpdates()
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        tableView.endUpdates()
+        tableView.reloadData()
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch (type) {
+        case .insert:
+            if let indexPath = newIndexPath {
+//                tableView.insertRows(at: [indexPath], with: .fade)
+                tableView.reloadData()
+            }
+            break
+        case .delete:
+            if let indexPath = indexPath {
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.reloadData()
+            }
+            break;
+        case .insert:
+            if let indexPath = indexPath {
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .move:
+            if let indexPath = indexPath {
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            break;
+        default:
+            print("...")
+        }
+    }
 }
 

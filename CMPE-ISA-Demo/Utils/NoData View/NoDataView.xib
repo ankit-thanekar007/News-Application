@@ -49,7 +49,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vWS-g8-laq" firstAttribute="leading" secondItem="czE-nh-PiG" secondAttribute="leading" id="6Mn-yL-5BF"/>
                 <constraint firstItem="vWS-g8-laq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="czE-nh-PiG" secondAttribute="top" id="doj-v7-2tD"/>

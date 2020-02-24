@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--User Details-->
+        <!--Saved News-->
         <scene sceneID="tUs-RM-psV">
             <objects>
                 <viewController id="E4n-rH-3NN" customClass="UserDetails" customModule="CMPE_ISA_Demo" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HTF-DY-BSD">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HTF-DY-BSD">
                                 <rect key="frame" x="8" y="88" width="398" height="725"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -34,7 +34,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cPj-sm-KA2"/>
                     </view>
-                    <navigationItem key="navigationItem" id="K2p-gx-ECT"/>
+                    <navigationItem key="navigationItem" title="Saved News" id="K2p-gx-ECT"/>
                     <connections>
                         <outlet property="backgroundView" destination="Pc0-Jy-SZs" id="QN2-gs-zoq"/>
                         <outlet property="tableView" destination="HTF-DY-BSD" id="7ks-2S-Dih"/>
@@ -44,7 +44,7 @@
                 <view contentMode="scaleToFill" id="Pc0-Jy-SZs" customClass="NoDataView" customModule="CMPE_ISA_Demo" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="y6L-Mx-iMJ"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="descriptionText" value="No offline news found! Add one to read it later! "/>
@@ -76,14 +76,21 @@
                                     <constraint firstAttribute="height" id="m3v-xX-8Oh"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="FgE-aJ-5Zj">
+                                <rect key="frame" x="20" y="108" width="374" height="680"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.85999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="FgE-aJ-5Zj" firstAttribute="leading" secondItem="b5o-09-GbX" secondAttribute="leading" constant="20" id="2je-Ah-r2N"/>
                             <constraint firstItem="b5o-09-GbX" firstAttribute="trailing" secondItem="uEs-Mf-TpL" secondAttribute="trailing" constant="8" id="3j4-s0-cb7"/>
                             <constraint firstItem="uEs-Mf-TpL" firstAttribute="top" secondItem="Q6N-wp-XSx" secondAttribute="bottom" constant="8" symbolic="YES" id="4eU-H0-bLG"/>
                             <constraint firstItem="Q6N-wp-XSx" firstAttribute="leading" secondItem="b5o-09-GbX" secondAttribute="leading" constant="8" id="8u5-jH-L8q"/>
                             <constraint firstItem="b5o-09-GbX" firstAttribute="trailing" secondItem="Q6N-wp-XSx" secondAttribute="trailing" constant="8" id="DK1-dY-xXb"/>
+                            <constraint firstItem="FgE-aJ-5Zj" firstAttribute="top" secondItem="b5o-09-GbX" secondAttribute="top" constant="20" id="DOX-ab-rGt"/>
                             <constraint firstItem="b5o-09-GbX" firstAttribute="bottom" secondItem="uEs-Mf-TpL" secondAttribute="bottom" id="Gdx-Pe-IE5"/>
+                            <constraint firstItem="b5o-09-GbX" firstAttribute="trailing" secondItem="FgE-aJ-5Zj" secondAttribute="trailing" constant="20" id="Iob-kw-cYa"/>
+                            <constraint firstItem="FgE-aJ-5Zj" firstAttribute="centerY" secondItem="Xf2-mW-vmz" secondAttribute="centerY" id="TPu-wG-oot"/>
                             <constraint firstItem="uEs-Mf-TpL" firstAttribute="leading" secondItem="b5o-09-GbX" secondAttribute="leading" constant="8" id="eDf-co-hDn"/>
                             <constraint firstItem="Q6N-wp-XSx" firstAttribute="top" secondItem="b5o-09-GbX" secondAttribute="top" id="pb7-Ty-tTU"/>
                         </constraints>
@@ -92,6 +99,7 @@
                     <navigationItem key="navigationItem" title="News Hub" id="fzw-q2-i6I"/>
                     <connections>
                         <outlet property="backgroundView" destination="JxQ-23-YjA" id="pwb-eG-GLG"/>
+                        <outlet property="loader" destination="FgE-aJ-5Zj" id="rf3-2x-sax"/>
                         <outlet property="loaderView" destination="uEs-Mf-TpL" id="BZF-je-D1K"/>
                         <outlet property="loadingFooterHeight" destination="m3v-xX-8Oh" id="qNK-x4-bNQ"/>
                         <outlet property="tableView" destination="Q6N-wp-XSx" id="AkQ-F4-Imn"/>
@@ -102,7 +110,7 @@
                 <view contentMode="scaleToFill" id="JxQ-23-YjA" customClass="NoDataView" customModule="CMPE_ISA_Demo" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="P3a-GS-2lt"/>
                 </view>
             </objects>
@@ -176,6 +184,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U10-pU-MOr">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="30"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

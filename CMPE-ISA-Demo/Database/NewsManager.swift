@@ -17,26 +17,29 @@ class NewsManager: NSObject {
                 return false
         }
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        if let newsEntity = NSEntityDescription.entity(forEntityName : "News", in: managedContext){
-            let newsObject = NSManagedObject(entity: newsEntity, insertInto: managedContext)
-            newsObject.setValue(newsModel.author, forKey: "author")
-            newsObject.setValue(newsModel.content, forKey: "content")
-            newsObject.setValue(newsModel.publishedAt, forKey: "publishedAt")
-            newsObject.setValue(newsModel.title, forKey: "title")
-            newsObject.setValue(newsModel.url, forKey: "url")
-            newsObject.setValue(newsModel.urlToImage, forKey: "urlToImage")
-            do {
-                try managedContext.save()
-                return true
-            } catch let error {
-                print(error)
-                return false
+        managedContext.automaticallyMergesChangesFromParent = true
+        var result = false
+        managedContext.performAndWait {
+            if let newsEntity = NSEntityDescription.entity(forEntityName : "News", in: managedContext){
+                let newsObject = NSManagedObject(entity: newsEntity, insertInto: managedContext)
+                newsObject.setValue(newsModel.author, forKey: "author")
+                newsObject.setValue(newsModel.content, forKey: "content")
+                newsObject.setValue(newsModel.publishedAt, forKey: "publishedAt")
+                newsObject.setValue(newsModel.title, forKey: "title")
+                newsObject.setValue(newsModel.url, forKey: "url")
+                newsObject.setValue(newsModel.urlToImage, forKey: "urlToImage")
+                newsObject.setValue(Date(), forKey: "creationDate")
+                do {
+                    try managedContext.save()
+                    appDelegate.saveContext()
+                    result = true
+                } catch let error {
+                    print(error)
+                }
             }
         }
-        return false
+        return result
     }
-    
     
     static func fetchNews(_ newsModel : NewsModel)->News?{
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -44,7 +47,7 @@ class NewsManager: NSObject {
                 return nil
         }
         let managedContext = appDelegate.persistentContainer.viewContext
-        
+        managedContext.automaticallyMergesChangesFromParent = true
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "News")
         fetchRequest.fetchLimit = 1
         let titlePredicate = NSPredicate(format: "title == %@", newsModel.title!)
@@ -68,6 +71,7 @@ class NewsManager: NSObject {
                 return []
         }
         let managedContext = appDelegate.persistentContainer.viewContext
+        managedContext.automaticallyMergesChangesFromParent = true
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "News")
             do {
                 let fetchResult = try managedContext.fetch(fetchRequest)
@@ -104,11 +108,12 @@ class NewsManager: NSObject {
                 return false
         }
         let managedContext = appDelegate.persistentContainer.viewContext
-        
+        managedContext.automaticallyMergesChangesFromParent = true
         if let toBeDeleted = fetchNews(newsModel) {
             managedContext.delete(toBeDeleted)
             do {
                 try managedContext.save()
+                appDelegate.saveContext()
                 return true
             } catch let error {
                 print(error)

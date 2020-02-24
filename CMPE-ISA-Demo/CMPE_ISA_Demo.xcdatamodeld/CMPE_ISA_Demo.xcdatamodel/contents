@@ -4,6 +4,7 @@
         <attribute name="attribute" optional="YES" attributeType="String"/>
         <attribute name="author" optional="YES" attributeType="String"/>
         <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="publishedAt" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
@@ -17,7 +18,7 @@
         <relationship name="relatedNews" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="News" inverseName="newsSource" inverseEntity="News"/>
     </entity>
     <elements>
-        <element name="News" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="News" positionX="-63" positionY="-18" width="128" height="193"/>
         <element name="NewsSource" positionX="-54" positionY="9" width="128" height="88"/>
     </elements>
 </model>
