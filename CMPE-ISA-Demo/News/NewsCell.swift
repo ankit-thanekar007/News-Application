@@ -62,12 +62,10 @@ class NewsCell: UITableViewCell {
     
     func downloadMedia(){
         newLoader.startAnimating()
-        self.cellData.downloadImage { (result) in
+        self.cellData.downloadImage { (result, image) in
             DispatchQueue.main.async {
-                if result {
-                    if let id = self.cellData.image {
-                        self.newsImage?.image = id
-                    }
+                if let image = image {
+                    self.newsImage?.image = image
                 }
                 self.newLoader.stopAnimating()
             }

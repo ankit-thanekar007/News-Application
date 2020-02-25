@@ -10,6 +10,7 @@ import UIKit
 
 class LoadingFooter: UIView {
     @IBOutlet private var activityIndicator : UIActivityIndicatorView!
+    @IBOutlet private var loadingText : UILabel!
     @IBInspectable var loaderBackground : UIColor = .white
     
     private var containerView : UIView!
@@ -50,6 +51,10 @@ class LoadingFooter: UIView {
     
     func stopLoading(){
         activityIndicator.stopAnimating()
+    }
+    
+    func setLoadingText(_ str : String){
+        loadingText.text = str
     }
 }
 

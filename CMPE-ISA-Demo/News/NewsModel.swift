@@ -9,6 +9,7 @@
 import UIKit
 
 class NewsModel: NSObject, Codable {
+    let imageCache = NSCache<NSString, UIImage>()
     let source: Source?
     let author, title, welcomeDescription: String?
     let url: String?
@@ -53,21 +54,26 @@ class NewsModel: NSObject, Codable {
 
 extension NewsModel {
     
-    func downloadImage(result : @escaping ((Bool)->Void))  {
-        if(image != nil){result(true); return}
+    func downloadImage(result : @escaping ((Bool, UIImage?)->Void))  {
         guard let urlToImage = urlToImage, let url = URL.init(string: urlToImage) else {
-            self.image = UIImage.init(named: "no-image")
-            result(true);
+            let image = UIImage.init(named: "no-image")
+            result(true, image);
             return
         }
+        
+        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
+            result(true, cachedImage)
+            return
+        }
+        
         let session = URLSession.init(configuration: .default)
         let task = session.dataTask(with: url) {[weak self] (data, response, error) in
             if let d = data, let image = UIImage.init(data: d) {
-                self?.image = image
-                result(true)
+                self?.imageCache.setObject(image, forKey: url.absoluteString as NSString)
+                result(true, image)
             }else {
-                self?.image = nil
-                result(false)
+                let image = UIImage.init(named: "no-image")
+                result(false, image)
             }
         }
         task.resume()

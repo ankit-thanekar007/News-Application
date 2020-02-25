@@ -12,11 +12,17 @@ protocol WRequest {
     var url : String { get set}
     var headers : [String : Any]? {get set}
     var data : Data? {get set}
-    var response : ((Any, Error?)->Void) {get set}
+    var response : ((Any, WError?)->Void) {get set}
 }
 
+struct WError {
+    var status : Int
+    var message : String
+}
+
+
 struct NewsRequest : WRequest {
-    var response: ((Any, Error?) -> Void)
+    var response: ((Any, WError?) -> Void)
     var url: String
     var headers: [String : Any]?
     var data: Data?
@@ -38,12 +44,13 @@ class Wrapper: NSObject {
               self?.task = nil
             }
             if let error = error {
+                r.response([], WError.init(status: 400, message: "Bad Request"))
               print ("DataTask error: " + error.localizedDescription + "\n")
             } else if let data = data, let response = response as? HTTPURLResponse,
-              response.statusCode == 200 {
-              DispatchQueue.main.async {
+                response.statusCode == 200 {
                 r.response(data, nil)
-              }
+            }else if let response = response as? HTTPURLResponse, response.statusCode == 426 {
+                r.response([],  WError.init(status: response.statusCode, message: response.description))
             }
           }
           task?.resume()

@@ -120,20 +120,30 @@ class NewsBoard: ParentController {
         NewsDataController.shared.fetchNews(searchText: searchText,
                                             sortBy: filterType,
                                             resetPage: shouldReset)
-        { [weak self] (s, e) in
-            
-            var indexPathSet : [Int] = []
-            for i in (s..<e){indexPathSet.append(i)}
-            self?.tableView.performBatchUpdates({
+        { [weak self](status, indexes) in
+            DispatchQueue.main.async {
+                if status {
+                    var indexPathSet : [Int] = []
+                    for i in (indexes.s..<indexes.e){indexPathSet.append(i)}
+                    
+                    self?.tableView.performBatchUpdates({
+                        self?.tableView.insertSections(IndexSet.init(indexPathSet), with: .fade)
+                        UIView.animate(withDuration: 0.5) {
+                            self?.loadingFooterHeight.constant = 0
+                        }
+                    }, completion: nil)
+                }else {
+                    
+                    self?.loaderView.setLoadingText("Failed to load data!")
+                    
+                }
+                
                 self?.showFullScreenLoader(false)
-                self?.tableView.insertSections(IndexSet.init(indexPathSet), with: .fade)
                 self?.tableView.refreshControl?.endRefreshing()
                 self?.isFetching = false;
                 self?.loaderView.stopLoading()
-                UIView.animate(withDuration: 0.5) {
-                    self?.loadingFooterHeight.constant = 0
-                }
-            }, completion: nil)
+                
+            }
         }
     }
 }
@@ -191,12 +201,17 @@ extension NewsBoard : UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.section == (articles().count - 1) {
             UIView.animate(withDuration: 0.5) {
-                self.loadingFooterHeight.constant = 50
+                self.loadingFooterHeight.constant = 150
                 self.loaderView.startLoading()
             }
             self.searchController.searchBar.endEditing(true)
             self.view.endEditing(true)
-            self.fetchNews(shouldReset: false)
+            
+            guard let searchText = searchController.searchBar.text else {
+                self.fetchNews(shouldReset: false)
+                return
+            }
+            self.fetchNews(searchText: searchText, shouldReset: false)
         }
     }
     

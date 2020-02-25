@@ -30,7 +30,7 @@ class NewsDataController: NSObject {
         if(resetPage){
             pageNumber = 1
         }
-        let base = "\(BASE_URL)/everything?apiKey=\(API_KEY)&page=\(pageNumber)&q=\(searchText)&sortBy=\(sortBy.rawValue)"
+        let base = "\(BASE_URL)/everything?apiKey=\(API_KEY)&page=\(pageNumber)&q=\(searchText)&sortBy=\(sortBy.rawValue)&pageSize=20&language=en"
         pageNumber+=1
         print("######### \(base) ########")
         return base
@@ -45,15 +45,16 @@ class NewsDataController: NSObject {
     
     func fetchNews(searchText : String, sortBy : SortOptions,
                    resetPage : Bool = false,
-                   response : @escaping (((s : Int, e : Int))->Void)) {
+                   response : @escaping ((_ success : Bool,(s : Int, e : Int))->Void)) {
         let nR = NewsRequest.init(
             response: {[weak self] (data, error) in
                 if let e = error {
-                    //TODO:
-                    print("Failed to fetch news" + e.localizedDescription)
+                    response(false,(0,0))
+                    self!.pageNumber = self!.pageNumber - 1;
+                    print("Failed to fetch news", e)
                 }else {
                     if let d = data as? Data{
-                        response(self!.mapToLocal(data: d, reset: resetPage))
+                        response(true,self!.mapToLocal(data: d, reset: resetPage))
                     }
                 }
             },
