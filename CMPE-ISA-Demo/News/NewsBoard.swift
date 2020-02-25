@@ -13,14 +13,15 @@ class NewsBoard: ParentController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastRefreshDate : Date!
     private let dataController = NewsDataController.shared
+    
     private var isSearchBarEmpty: Bool {
-      return searchController.searchBar.text?.isEmpty ?? true
+        return searchController.searchBar.text?.isEmpty ?? true
     }
     
     private var isFiltering: Bool {
-      let searchBarScopeIsFiltering =
-        searchController.searchBar.selectedScopeButtonIndex != 0
-      return searchController.isActive || !isSearchBarEmpty
+        let searchBarScopeIsFiltering =
+            searchController.searchBar.selectedScopeButtonIndex != 0
+        return searchController.isActive || !isSearchBarEmpty
     }
     
     private var isSearching : Bool  {
@@ -58,13 +59,12 @@ class NewsBoard: ParentController {
         configureRefreshControl()
         loaderView.stopLoading()
         showFullScreenLoader(true)
-        fetchNews()
+        fetchNews(shouldReset: true)
         tableView.register(UINib.init(nibName: "NewsCell", bundle: Bundle.main), forCellReuseIdentifier: "NewsCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
     }
     
     private func showFullScreenLoader(_ show : Bool){
@@ -100,41 +100,40 @@ class NewsBoard: ParentController {
     
     @objc func fetch(){
         showFullScreenLoader(true)
-        self.fetchNews()
+        self.fetchNews(shouldReset: true)
     }
     
-    @objc func fetchNews(searchText : String = "SJSU"){
+    @objc func fetchNews(searchText : String = "SJSU", shouldReset : Bool){
         self.isFetching = true;
-        if((self.isSearching || self.isFiltering || tableView.refreshControl?.isRefreshing ?? false)) {
+        
+        if(shouldReset) {
             var prevIndexPathSet : [Int] = []
             for i in (0..<articles().count){prevIndexPathSet.append(i)}
-//            self.tableView.performBatchUpdates({
-//                self.dataController.removeArticles()
-//                self.tableView.deleteSections(IndexSet.init(prevIndexPathSet), with: .top)
-//            }, completion: { (completed) in
-//
-//            })
+            self.tableView.performBatchUpdates({
+                self.dataController.removeArticles()
+                self.tableView.deleteSections(IndexSet.init(prevIndexPathSet), with: .top)
+            }, completion: { (completed) in
+                
+            })
         }
         
         NewsDataController.shared.fetchNews(searchText: searchText,
                                             sortBy: filterType,
-                                            resetPage: isSearching || isFiltering || tableView.refreshControl?.isRefreshing ?? false)
+                                            resetPage: shouldReset)
         { [weak self] (s, e) in
             
-//            var indexPathSet : [Int] = []
-//            for i in (s..<e){indexPathSet.append(i)}
-//            self?.tableView.performBatchUpdates({
+            var indexPathSet : [Int] = []
+            for i in (s..<e){indexPathSet.append(i)}
+            self?.tableView.performBatchUpdates({
                 self?.showFullScreenLoader(false)
-//                self?.tableView.insertSections(IndexSet.init(indexPathSet), with: .fade)
+                self?.tableView.insertSections(IndexSet.init(indexPathSet), with: .fade)
                 self?.tableView.refreshControl?.endRefreshing()
                 self?.isFetching = false;
                 self?.loaderView.stopLoading()
-                self?.tableView.reloadData()
                 UIView.animate(withDuration: 0.5) {
                     self?.loadingFooterHeight.constant = 0
-                    
-            }
-//            }, completion: nil)
+                }
+            }, completion: nil)
         }
     }
 }
@@ -149,15 +148,18 @@ extension NewsBoard : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar,
                    selectedScopeButtonIndexDidChange selectedScope: Int) {
-        let searchText = searchBar.text
-        showFullScreenLoader(true)
-        self.fetchNews(searchText: searchText ?? "SJSU")
+        if let searchText = searchBar.text {
+            showFullScreenLoader(true)
+            self.fetchNews(searchText: searchText.isEmpty ? "SJSU" : searchText,
+                           shouldReset: true
+            )
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let searchText = searchBar.text, !searchText.isEmpty {
+        if let searchText = searchBar.text {
             showFullScreenLoader(true)
-            self.fetchNews(searchText: searchText)
+            self.fetchNews(searchText: searchText.isEmpty ? "SJSU" : searchText, shouldReset: true)
         }
     }
 }
@@ -188,14 +190,16 @@ extension NewsBoard : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.section == (articles().count - 1) {
-            print(indexPath.section)
             UIView.animate(withDuration: 0.5) {
                 self.loadingFooterHeight.constant = 50
                 self.loaderView.startLoading()
             }
-            self.fetchNews()
+            self.searchController.searchBar.endEditing(true)
+            self.view.endEditing(true)
+            self.fetchNews(shouldReset: false)
         }
     }
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()

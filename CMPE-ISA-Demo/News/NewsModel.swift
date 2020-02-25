@@ -55,13 +55,14 @@ extension NewsModel {
     
     func downloadImage(result : @escaping ((Bool)->Void))  {
         if(image != nil){result(true); return}
-        if(urlToImage == nil){result(false); return}
+        guard let urlToImage = urlToImage, let url = URL.init(string: urlToImage) else {
+            self.image = UIImage.init(named: "no-image")
+            result(true);
+            return
+        }
         let session = URLSession.init(configuration: .default)
-        let task = session.dataTask(with: URL.init(string: urlToImage!)!) {[weak self] (data, response, error) in
+        let task = session.dataTask(with: url) {[weak self] (data, response, error) in
             if let d = data, let image = UIImage.init(data: d) {
-//                let resizedImage = image.jpeg(.lowest)?.image()?.resizeImage(100,
-//                                                                             opaque: true,
-//                                                                             contentMode: .scaleAspectFill)
                 self?.image = image
                 result(true)
             }else {
@@ -83,7 +84,7 @@ extension UIImage {
         case high    = 0.75
         case highest = 1
     }
-
+    
     func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
         return jpegData(compressionQuality: jpegQuality.rawValue)
     }
@@ -101,26 +102,26 @@ extension UIImage {
         var width: CGFloat
         var height: CGFloat
         var newImage: UIImage
-
+        
         let size = self.size
         let aspectRatio =  size.width/size.height
-
+        
         switch contentMode {
-            case .scaleAspectFit:
-                if aspectRatio > 1 {                            // Landscape image
-                    width = dimension
-                    height = dimension / aspectRatio
-                } else {                                        // Portrait image
-                    height = dimension
-                    width = dimension * aspectRatio
-                }
-            case .scaleAspectFill:
+        case .scaleAspectFit:
+            if aspectRatio > 1 {                            // Landscape image
+                width = dimension
+                height = dimension / aspectRatio
+            } else {                                        // Portrait image
                 height = dimension
-                width = ((size.width) / aspectRatio)/dimension
+                width = dimension * aspectRatio
+            }
+        case .scaleAspectFill:
+            height = dimension
+            width = ((size.width) / aspectRatio)/dimension
         default:
             fatalError("UIIMage.resizeToFit(): FATAL: Unimplemented ContentMode")
         }
-
+        
         if #available(iOS 10.0, *) {
             let renderFormat = UIGraphicsImageRendererFormat.default()
             renderFormat.opaque = opaque
@@ -131,11 +132,11 @@ extension UIImage {
             }
         } else {
             UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), opaque, 0)
-                self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
-                newImage = UIGraphicsGetImageFromCurrentImageContext()!
+            self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+            newImage = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
         }
-
+        
         return newImage
     }
 }
