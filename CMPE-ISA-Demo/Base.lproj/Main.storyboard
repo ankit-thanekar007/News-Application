@@ -38,6 +38,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="Pc0-Jy-SZs" id="QN2-gs-zoq"/>
                         <outlet property="tableView" destination="HTF-DY-BSD" id="7ks-2S-Dih"/>
+                        <segue destination="rFg-Db-rwP" kind="show" identifier="ShowOfflineNews" id="gvO-eN-8b6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OJ0-Nb-vMR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -51,7 +52,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1490" y="515"/>
+            <point key="canvasLocation" x="1725" y="515"/>
         </scene>
         <!--News Hub-->
         <scene sceneID="kbv-bH-roQ">
@@ -76,7 +77,7 @@
                                     <constraint firstAttribute="height" id="m3v-xX-8Oh"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="FgE-aJ-5Zj">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="FgE-aJ-5Zj">
                                 <rect key="frame" x="20" y="108" width="374" height="680"/>
                             </activityIndicatorView>
                         </subviews>
@@ -103,7 +104,7 @@
                         <outlet property="loaderView" destination="uEs-Mf-TpL" id="BZF-je-D1K"/>
                         <outlet property="loadingFooterHeight" destination="m3v-xX-8Oh" id="qNK-x4-bNQ"/>
                         <outlet property="tableView" destination="Q6N-wp-XSx" id="AkQ-F4-Imn"/>
-                        <segue destination="nEK-0c-vZr" kind="show" identifier="NewsDetail" id="Vd6-36-1eO"/>
+                        <segue destination="rFg-Db-rwP" kind="show" identifier="ShowNews" id="7sD-3v-eXA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0za-ai-uSq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -114,23 +115,48 @@
                     <viewLayoutGuide key="safeArea" id="P3a-GS-2lt"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1489.8550724637682" y="-266.51785714285711"/>
+            <point key="canvasLocation" x="1725" y="-267"/>
         </scene>
-        <!--News Detail-->
-        <scene sceneID="snf-hc-nxB">
+        <!--View News On Web-->
+        <scene sceneID="yaH-vI-CFr">
             <objects>
-                <viewController id="nEK-0c-vZr" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="b90-7y-uDo">
+                <viewController hidesBottomBarWhenPushed="YES" id="rFg-Db-rwP" customClass="ViewNewsOnWeb" customModule="CMPE_ISA_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FxC-Av-goe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1t7-XP-sK3">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3KU-Y7-3zI">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="m2R-py-dQB"/>
+                        <constraints>
+                            <constraint firstItem="3KU-Y7-3zI" firstAttribute="centerX" secondItem="FxC-Av-goe" secondAttribute="centerX" id="DQS-GT-MH9"/>
+                            <constraint firstItem="1t7-XP-sK3" firstAttribute="top" secondItem="02W-ct-Snn" secondAttribute="top" id="F0F-OZ-jc9"/>
+                            <constraint firstItem="02W-ct-Snn" firstAttribute="trailing" secondItem="1t7-XP-sK3" secondAttribute="trailing" id="Fhx-dG-7KC"/>
+                            <constraint firstItem="1t7-XP-sK3" firstAttribute="leading" secondItem="02W-ct-Snn" secondAttribute="leading" id="M8h-FA-8S8"/>
+                            <constraint firstItem="3KU-Y7-3zI" firstAttribute="centerY" secondItem="FxC-Av-goe" secondAttribute="centerY" id="OVi-iW-HMe"/>
+                            <constraint firstItem="02W-ct-Snn" firstAttribute="bottom" secondItem="1t7-XP-sK3" secondAttribute="bottom" id="ai8-qO-Mkw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="02W-ct-Snn"/>
                     </view>
-                    <navigationItem key="navigationItem" title="News Detail" id="3O6-Nn-ct5"/>
+                    <navigationItem key="navigationItem" id="T44-4k-YkX"/>
+                    <connections>
+                        <outlet property="loader" destination="3KU-Y7-3zI" id="5PW-st-W71"/>
+                        <outlet property="webView" destination="1t7-XP-sK3" id="cyb-1l-VST"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pml-ch-RXa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VXH-kJ-uTM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2472" y="-266"/>
+            <point key="canvasLocation" x="3183" y="36"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UWU-vZ-lzO">
@@ -153,7 +179,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Twm-LT-phR">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yad-Bb-oJq" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="Yad-Bb-oJq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="mostRecent" id="pyU-3y-LGb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z45-xd-UxU">
@@ -178,7 +204,7 @@
         <!--User-->
         <scene sceneID="mF1-fY-Z9f">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9aO-RX-GST" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="9aO-RX-GST" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="User" image="person.circle.fill" catalog="system" id="ABk-uB-SVX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U10-pU-MOr">
@@ -201,4 +227,7 @@
     <resources>
         <image name="person.circle.fill" catalog="system" width="64" height="60"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="7sD-3v-eXA"/>
+    </inferredMetricsTieBreakers>
 </document>

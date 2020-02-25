@@ -13,14 +13,13 @@ class NewsBoard: ParentController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastRefreshDate : Date!
     private let dataController = NewsDataController.shared
+    private var selectedURL : String!
     
     private var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
     private var isFiltering: Bool {
-        let searchBarScopeIsFiltering =
-            searchController.searchBar.selectedScopeButtonIndex != 0
         return searchController.isActive || !isSearchBarEmpty
     }
     
@@ -63,8 +62,11 @@ class NewsBoard: ParentController {
         tableView.register(UINib.init(nibName: "NewsCell", bundle: Bundle.main), forCellReuseIdentifier: "NewsCell")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "ShowNews") {
+            let vc = segue.destination as! ViewNewsOnWeb
+            vc.myURLString = selectedURL ?? ""
+        }
     }
     
     private func showFullScreenLoader(_ show : Bool){
@@ -127,18 +129,17 @@ class NewsBoard: ParentController {
                     for i in (indexes.s..<indexes.e){indexPathSet.append(i)}
                     
                     self?.tableView.performBatchUpdates({
+                        self?.showFullScreenLoader(false)
                         self?.tableView.insertSections(IndexSet.init(indexPathSet), with: .fade)
-                        UIView.animate(withDuration: 0.5) {
-                            self?.loadingFooterHeight.constant = 0
-                        }
                     }, completion: nil)
                 }else {
                     
-                    self?.loaderView.setLoadingText("Failed to load data!")
+                    
                     
                 }
-                
-                self?.showFullScreenLoader(false)
+                UIView.animate(withDuration: 0.5) {
+                    self?.loadingFooterHeight.constant = 0
+                }
                 self?.tableView.refreshControl?.endRefreshing()
                 self?.isFetching = false;
                 self?.loaderView.stopLoading()
@@ -201,7 +202,7 @@ extension NewsBoard : UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.section == (articles().count - 1) {
             UIView.animate(withDuration: 0.5) {
-                self.loadingFooterHeight.constant = 150
+                self.loadingFooterHeight.constant = 80
                 self.loaderView.startLoading()
             }
             self.searchController.searchBar.endEditing(true)
@@ -228,5 +229,8 @@ extension NewsBoard : UITableViewDataSource {
 }
 
 extension NewsBoard : UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedURL = articles()[indexPath.section].url
+        performSegue(withIdentifier: "ShowNews", sender: self)
+    }
 }

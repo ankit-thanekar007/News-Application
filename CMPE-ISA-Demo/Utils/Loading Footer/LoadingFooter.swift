@@ -10,7 +10,6 @@ import UIKit
 
 class LoadingFooter: UIView {
     @IBOutlet private var activityIndicator : UIActivityIndicatorView!
-    @IBOutlet private var loadingText : UILabel!
     @IBInspectable var loaderBackground : UIColor = .white
     
     private var containerView : UIView!
@@ -33,7 +32,7 @@ class LoadingFooter: UIView {
     private func commonInit() {
         
         let nib = UINib(nibName: "LoadingFooter", bundle: .main)
-        containerView = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
+        containerView = nib.instantiate(withOwner: self, options: nil)[0] as? UIView
 
         self.addSubview(self.containerView)
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,10 +50,6 @@ class LoadingFooter: UIView {
     
     func stopLoading(){
         activityIndicator.stopAnimating()
-    }
-    
-    func setLoadingText(_ str : String){
-        loadingText.text = str
     }
 }
 

@@ -15,7 +15,7 @@ class UserDetails: UIViewController {
     @IBOutlet private var backgroundView : NoDataView!
     
     private let persistentContainer = NSPersistentContainer(name: "CMPE_ISA_Demo")
-    
+    private var selectedURL : String!
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<News> = {
         // Create Fetch Request
         let fetchRequest: NSFetchRequest<News> = News.fetchRequest()
@@ -71,6 +71,14 @@ class UserDetails: UIViewController {
         self.tableView.reloadData()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "ShowOfflineNews") {
+            let vc = segue.destination as! ViewNewsOnWeb
+            vc.myURLString = selectedURL ?? ""
+        }
+    }
+    
+    
     private func loadOfflineData(){
         do {
             try self.fetchedResultsController.performFetch()
@@ -115,6 +123,8 @@ extension UserDetails : UITableViewDataSource {
         return 10
     }
     
+    
+    
     func mapToLocal(newsObject : News) -> NewsModel {
         let newsmodel = NewsModel.init(source: Source.init(id: newsObject.newsSource?.id,
                                                            name: newsObject.newsSource?.name),
@@ -127,6 +137,13 @@ extension UserDetails : UITableViewDataSource {
                                        content: newsObject.content)
         
         return newsmodel
+    }
+}
+
+extension UserDetails : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedURL = fetchedResultsController.fetchedObjects?[indexPath.section].url
+        performSegue(withIdentifier: "ShowOfflineNews", sender: self)
     }
 }
 
@@ -147,29 +164,16 @@ extension UserDetails: NSFetchedResultsControllerDelegate {
                     for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch (type) {
         case .insert:
-            if let indexPath = newIndexPath {
-//                tableView.insertRows(at: [indexPath], with: .fade)
-                tableView.reloadData()
-            }
+            tableView.reloadData()
             break
         case .delete:
-            if let indexPath = indexPath {
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-                tableView.reloadData()
-            }
-            break;
-        case .insert:
-            if let indexPath = indexPath {
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
+            tableView.reloadData()
             break;
         case .move:
-            if let indexPath = indexPath {
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
+            print("In Move")
             break;
         default:
-            print("...")
+            print("... Default")
         }
     }
 }
