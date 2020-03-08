@@ -52,7 +52,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1725" y="515"/>
+            <point key="canvasLocation" x="1722" y="161"/>
         </scene>
         <!--News Hub-->
         <scene sceneID="kbv-bH-roQ">
@@ -115,7 +115,7 @@
                     <viewLayoutGuide key="safeArea" id="P3a-GS-2lt"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1725" y="-267"/>
+            <point key="canvasLocation" x="1722" y="-812"/>
         </scene>
         <!--View News On Web-->
         <scene sceneID="yaH-vI-CFr">
@@ -156,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VXH-kJ-uTM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3183" y="36"/>
+            <point key="canvasLocation" x="3449" y="-310"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UWU-vZ-lzO">
@@ -170,6 +170,7 @@
                     <connections>
                         <segue destination="Yad-Bb-oJq" kind="relationship" relationship="viewControllers" id="FY5-e8-VNN"/>
                         <segue destination="9aO-RX-GST" kind="relationship" relationship="viewControllers" id="y0d-ZF-tz9"/>
+                        <segue destination="INX-rq-d5L" kind="relationship" relationship="viewControllers" id="Qwz-cn-bo0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WSs-Gz-C3e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -199,7 +200,73 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rF3-uO-BwT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="813.04347826086962" y="-266.51785714285711"/>
+            <point key="canvasLocation" x="713" y="-812"/>
+        </scene>
+        <!--Channels-->
+        <scene sceneID="rJz-Xx-mxu">
+            <objects>
+                <viewController id="qs5-fa-vf6" customClass="UserList" customModule="CMPE_ISA_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7zp-to-slz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="gid-wJ-gUk" customClass="GIDSignInButton">
+                                <rect key="frame" x="107" y="398" width="200" height="100"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HwY-6F-HUI">
+                                <rect key="frame" x="0.0" y="88" width="414" height="788"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChannelCell" textLabel="40G-q8-z1n" style="IBUITableViewCellStyleDefault" id="4qP-Li-RDY">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="45.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4qP-Li-RDY" id="eFf-hR-abQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="45.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="40G-q8-z1n">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="45.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="Georgia-Bold" family="Georgia" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="qs5-fa-vf6" id="5zC-Xw-bWL"/>
+                                    <outlet property="delegate" destination="qs5-fa-vf6" id="myJ-LB-AFL"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="gid-wJ-gUk" firstAttribute="centerY" secondItem="7zp-to-slz" secondAttribute="centerY" id="0s3-Am-Bsi"/>
+                            <constraint firstItem="HwY-6F-HUI" firstAttribute="leading" secondItem="4lB-UJ-gD9" secondAttribute="leading" id="57H-79-NN0"/>
+                            <constraint firstItem="4lB-UJ-gD9" firstAttribute="trailing" secondItem="HwY-6F-HUI" secondAttribute="trailing" id="J3n-bS-rsM"/>
+                            <constraint firstItem="gid-wJ-gUk" firstAttribute="centerX" secondItem="7zp-to-slz" secondAttribute="centerX" id="OCg-iv-R7Y"/>
+                            <constraint firstAttribute="bottom" secondItem="HwY-6F-HUI" secondAttribute="bottom" constant="20" symbolic="YES" id="VP5-Ki-C66"/>
+                            <constraint firstItem="HwY-6F-HUI" firstAttribute="top" secondItem="4lB-UJ-gD9" secondAttribute="top" id="f3M-d5-1a1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4lB-UJ-gD9"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Channels" id="lge-aR-MNl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="lv8-NM-9I9">
+                            <connections>
+                                <action selector="alertForChannel" destination="qs5-fa-vf6" id="G9V-Eo-pp9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="HwY-6F-HUI" id="NfG-HB-5AK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D2R-nW-Yl3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="712" y="1065"/>
         </scene>
         <!--User-->
         <scene sceneID="mF1-fY-Z9f">
@@ -221,13 +288,35 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZf-Yv-mwk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="813" y="515"/>
+            <point key="canvasLocation" x="712" y="161"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WpC-cC-GMT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="INX-rq-d5L" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="97c-R4-bzi"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tig-k6-pAF">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="30"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qs5-fa-vf6" kind="relationship" relationship="rootViewController" id="u0f-gu-LgE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4iI-ES-8En" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-104" y="1065"/>
         </scene>
     </scenes>
     <resources>
         <image name="person.circle.fill" catalog="system" width="64" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7sD-3v-eXA"/>
+        <segue reference="gvO-eN-8b6"/>
     </inferredMetricsTieBreakers>
 </document>

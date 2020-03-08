@@ -3,11 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		215AD280FECBC53D39A074D0 /* Pods_CMPE_ISA_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5975ABB874BE3187001099AD /* Pods_CMPE_ISA_Demo.framework */; };
 		BC003F532405A89300B615F0 /* ViewNewsOnWeb.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC003F522405A89300B615F0 /* ViewNewsOnWeb.swift */; };
+		BC34B4A32414409600A820C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC34B4A22414409600A820C2 /* GoogleService-Info.plist */; };
+		BC34B4A52414476D00A820C2 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4A42414476D00A820C2 /* UserList.swift */; };
+		BC34B4A824159A1300A820C2 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4A724159A1300A820C2 /* Channel.swift */; };
+		BC34B4AA24159A2100A820C2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4A924159A2100A820C2 /* Message.swift */; };
+		BC34B4AC24159A3800A820C2 /* ChatDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34B4AB24159A3800A820C2 /* ChatDataController.swift */; };
 		BC3AFB2423EF66A300390404 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AFB2323EF66A300390404 /* LocationManager.swift */; };
 		BC3AFB2623EF6A3B00390404 /* ParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AFB2523EF6A3B00390404 /* ParentController.swift */; };
 		BC5D96402401D20900F8254D /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC5D963F2401D20900F8254D /* NewsCell.xib */; };
@@ -33,7 +39,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5975ABB874BE3187001099AD /* Pods_CMPE_ISA_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CMPE_ISA_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93E4CDE6CE13E930224AA097 /* Pods-CMPE-ISA-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CMPE-ISA-Demo.debug.xcconfig"; path = "Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BC003F522405A89300B615F0 /* ViewNewsOnWeb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewNewsOnWeb.swift; path = "CMPE-ISA-Demo/News/ViewNewsOnWeb.swift"; sourceTree = SOURCE_ROOT; };
+		BC34B4A22414409600A820C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BC34B4A42414476D00A820C2 /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
+		BC34B4A724159A1300A820C2 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		BC34B4A924159A2100A820C2 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		BC34B4AB24159A3800A820C2 /* ChatDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDataController.swift; sourceTree = "<group>"; };
 		BC3AFB2323EF66A300390404 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		BC3AFB2523EF6A3B00390404 /* ParentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentController.swift; sourceTree = "<group>"; };
 		BC5D963F2401D20900F8254D /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
@@ -58,6 +71,7 @@
 		BC6A16A823EFA59500563994 /* LoadingFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooter.swift; sourceTree = "<group>"; };
 		BC6A16A923EFA59500563994 /* LoadingFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingFooter.xib; sourceTree = "<group>"; };
 		BCF03F2923F8919C008C1145 /* NewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsManager.swift; sourceTree = "<group>"; };
+		C305CD6548218EF79A08714C /* Pods-CMPE-ISA-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CMPE-ISA-Demo.release.xcconfig"; path = "Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,12 +79,41 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				215AD280FECBC53D39A074D0 /* Pods_CMPE_ISA_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		738352EA005E9E5298CAD098 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				93E4CDE6CE13E930224AA097 /* Pods-CMPE-ISA-Demo.debug.xcconfig */,
+				C305CD6548218EF79A08714C /* Pods-CMPE-ISA-Demo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8AEEAC2599A70C7A13C25B2A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5975ABB874BE3187001099AD /* Pods_CMPE_ISA_Demo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BC34B4A6241599EF00A820C2 /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				BC34B4A42414476D00A820C2 /* UserList.swift */,
+				BC34B4A724159A1300A820C2 /* Channel.swift */,
+				BC34B4A924159A2100A820C2 /* Message.swift */,
+				BC34B4AB24159A3800A820C2 /* ChatDataController.swift */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
 		BC3AFB2223EF668200390404 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +146,8 @@
 			children = (
 				BC653E6623E27A0F00A82B0E /* CMPE-ISA-Demo */,
 				BC653E6523E27A0F00A82B0E /* Products */,
+				738352EA005E9E5298CAD098 /* Pods */,
+				8AEEAC2599A70C7A13C25B2A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +162,7 @@
 		BC653E6623E27A0F00A82B0E /* CMPE-ISA-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				BC34B4A22414409600A820C2 /* GoogleService-Info.plist */,
 				BC5D96482401DC8A00F8254D /* User Details */,
 				BCF03F2823F89168008C1145 /* Database */,
 				BC3AFB2523EF6A3B00390404 /* ParentController.swift */,
@@ -130,6 +176,7 @@
 				BC653E7523E27A1500A82B0E /* LaunchScreen.storyboard */,
 				BC653E7823E27A1500A82B0E /* Info.plist */,
 				BC653E7023E27A1000A82B0E /* CMPE_ISA_Demo.xcdatamodeld */,
+				BC34B4A6241599EF00A820C2 /* Channels */,
 			);
 			path = "CMPE-ISA-Demo";
 			sourceTree = "<group>";
@@ -173,9 +220,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC653E7B23E27A1500A82B0E /* Build configuration list for PBXNativeTarget "CMPE-ISA-Demo" */;
 			buildPhases = (
+				30C9DD1D9B8FAD256C8E3035 /* [CP] Check Pods Manifest.lock */,
 				BC653E6023E27A0F00A82B0E /* Sources */,
 				BC653E6123E27A0F00A82B0E /* Frameworks */,
 				BC653E6223E27A0F00A82B0E /* Resources */,
+				5C403EAEFF711DDE5AE69AC4 /* [CP] Embed Pods Frameworks */,
+				7D06DB88BABED2DB5FDF4616 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -230,10 +280,70 @@
 				BC5D96442401D4BB00F8254D /* NoDataView.xib in Resources */,
 				BC653E6F23E27A1000A82B0E /* Main.storyboard in Resources */,
 				BC6A16AB23EFA59500563994 /* LoadingFooter.xib in Resources */,
+				BC34B4A32414409600A820C2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		30C9DD1D9B8FAD256C8E3035 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CMPE-ISA-Demo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5C403EAEFF711DDE5AE69AC4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D06DB88BABED2DB5FDF4616 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BC653E6023E27A0F00A82B0E /* Sources */ = {
@@ -242,17 +352,21 @@
 			files = (
 				BC653E6823E27A1000A82B0E /* AppDelegate.swift in Sources */,
 				BC5D96472401DC8200F8254D /* UserDetails.swift in Sources */,
+				BC34B4A824159A1300A820C2 /* Channel.swift in Sources */,
 				BC003F532405A89300B615F0 /* ViewNewsOnWeb.swift in Sources */,
 				BC653E8723E436F000A82B0E /* Wrapper.swift in Sources */,
 				BC6A16AA23EFA59500563994 /* LoadingFooter.swift in Sources */,
 				BC653E6A23E27A1000A82B0E /* SceneDelegate.swift in Sources */,
 				BC3AFB2423EF66A300390404 /* LocationManager.swift in Sources */,
+				BC34B4AA24159A2100A820C2 /* Message.swift in Sources */,
 				BC653E8323E435E600A82B0E /* Source.swift in Sources */,
 				BC653E8C23E5605A00A82B0E /* NewsCell.swift in Sources */,
 				BC653E8523E4365700A82B0E /* NewsDataController.swift in Sources */,
+				BC34B4A52414476D00A820C2 /* UserList.swift in Sources */,
 				BC653E7223E27A1000A82B0E /* CMPE_ISA_Demo.xcdatamodeld in Sources */,
 				BC653E7F23E433AD00A82B0E /* NewsBoard.swift in Sources */,
 				BC5D96432401D4BB00F8254D /* NoDataView.swift in Sources */,
+				BC34B4AC24159A3800A820C2 /* ChatDataController.swift in Sources */,
 				BC653E8123E4355400A82B0E /* NewsModel.swift in Sources */,
 				BC653E8A23E43F9D00A82B0E /* NewsCollection.swift in Sources */,
 				BCF03F2A23F8919C008C1145 /* NewsManager.swift in Sources */,
@@ -398,6 +512,7 @@
 		};
 		BC653E7C23E27A1500A82B0E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 93E4CDE6CE13E930224AA097 /* Pods-CMPE-ISA-Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -416,6 +531,7 @@
 		};
 		BC653E7D23E27A1500A82B0E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C305CD6548218EF79A08714C /* Pods-CMPE-ISA-Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
