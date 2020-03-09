@@ -11,11 +11,16 @@ import CoreData
 import Firebase
 import GoogleSignIn
 
+protocol userSignInUpdate {
+    func userDidSignIn()
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
-
+    var signInDelegate : userSignInUpdate?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
@@ -107,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 // ...
                 return
             }
-            print("Signed In")
+            self.signInDelegate?.userDidSignIn()
         }
         // ...
     }

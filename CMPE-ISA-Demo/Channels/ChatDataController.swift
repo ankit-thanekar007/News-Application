@@ -23,8 +23,10 @@ class ChatDataController: NSObject {
     func handleChannelUpdate(change : DocumentChange)  {
         switch change.type {
         case .added:
+            let documentData = change.document.data()
             let channel = Channel.init(id: change.document.documentID,
-                                       name: change.document.data()["channelName"] as! String)
+                                       name: documentData["channelName"] as! String,
+                                       owner: documentData["channelOwner"] as! String, created: documentData["channelCreated"] as! String )
             masterChannelList.append(channel)
             break
         case .modified:

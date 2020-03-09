@@ -55,7 +55,6 @@ class UserDetails: UIViewController {
         }
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         fetchedResultsController.delegate = nil

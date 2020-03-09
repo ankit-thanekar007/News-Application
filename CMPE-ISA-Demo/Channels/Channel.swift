@@ -11,15 +11,19 @@ import UIKit
 class Channel: NSObject {
     var channelID : String!
     var channelName : String!
+    var channelOwner : String!
+    var channelCreated : String!
     var messages : [Message] = []
     
     override init() {
         super.init()
     }
     
-    init(id : String?, name : String) {
+    init(id : String?, name : String, owner : String, created : String) {
         super.init()
         channelName = name
         channelID = id
+        channelOwner = owner
+        channelCreated = created
     }
 }

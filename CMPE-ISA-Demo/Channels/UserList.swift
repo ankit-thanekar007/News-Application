@@ -11,9 +11,11 @@ import Firebase
 import FirebaseFirestore
 import GoogleSignIn
 
-class UserList: UIViewController {
+class UserList: ParentController {
     
     @IBOutlet private weak var tableView : UITableView!
+    @IBOutlet private weak var addChannel : UIBarButtonItem!
+    @IBOutlet private var backgroundView : NoDataView!
     private let db = Firestore.firestore()
     
     private var channelReference: CollectionReference {
@@ -27,9 +29,21 @@ class UserList: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
         dataController.delegate = self
-        //        GIDSignIn.sharedInstance()?.signIn()
+        handleSignIn()
         listenForChannels()
+        ((UIApplication.shared.delegate) as! AppDelegate).signInDelegate = self
+    }
+    
+    func handleSignIn(){
+        if (GIDSignIn.sharedInstance()?.currentUser) != nil{
+            addChannel.isEnabled = true
+            tableView.isHidden = false
+        }else {
+            addChannel.isEnabled = false
+            tableView.isHidden = true
+        }
     }
     
     func listenForChannels()  {
@@ -52,7 +66,9 @@ class UserList: UIViewController {
     
     
     func createChannel(_ name : String)  {
-        let jsonChannel = ["channelName" : name]
+        var jsonChannel = ["channelName" : name]
+        jsonChannel["channelOwner"] = GIDSignIn.sharedInstance()?.currentUser.userID ?? ""
+        jsonChannel["channelCreated"] = Date.init().currentDateString()
         channelReference.addDocument(data: jsonChannel) { error in
             if let e = error {
                 print("Error saving channel: \(e.localizedDescription)")
@@ -117,6 +133,7 @@ extension UserList : ObserveChannels {
 extension UserList : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.backgroundView = channels.count > 0 ? nil : backgroundView
         return channels.count
     }
     
@@ -124,6 +141,7 @@ extension UserList : UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelCell",
                                                  for: indexPath)
         cell.textLabel?.text = channels[indexPath.row].channelName
+        cell.detailTextLabel?.text = "Created At \(channels[indexPath.row].channelCreated ?? "")" 
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -143,6 +161,12 @@ extension UserList : UITableViewDelegate {
         })
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration
+    }
+}
+
+extension UserList : userSignInUpdate {
+    func userDidSignIn() {
+        handleSignIn()
     }
 }
 
