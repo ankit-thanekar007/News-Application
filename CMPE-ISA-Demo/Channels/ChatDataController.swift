@@ -24,10 +24,14 @@ class ChatDataController: NSObject {
         switch change.type {
         case .added:
             let documentData = change.document.data()
-            let channel = Channel.init(id: change.document.documentID,
-                                       name: documentData["channelName"] as! String,
-                                       owner: documentData["channelOwner"] as! String, created: documentData["channelCreated"] as! String )
-            masterChannelList.append(channel)
+            if let name = documentData["channelName"] as?  String,
+                let owner = documentData["channelOwner"] as?  String,
+                let created = documentData["channelCreated"] as?  String {
+                    let channel = Channel.init(id: change.document.documentID,
+                    name: name,
+                    owner: owner, created: created)
+                masterChannelList.append(channel)
+            }
             break
         case .modified:
             print(change.document.data())

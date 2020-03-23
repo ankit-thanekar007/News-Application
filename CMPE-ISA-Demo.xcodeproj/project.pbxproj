@@ -35,6 +35,8 @@
 		BC653E8C23E5605A00A82B0E /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC653E8B23E5605A00A82B0E /* NewsCell.swift */; };
 		BC6A16AA23EFA59500563994 /* LoadingFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6A16A823EFA59500563994 /* LoadingFooter.swift */; };
 		BC6A16AB23EFA59500563994 /* LoadingFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC6A16A923EFA59500563994 /* LoadingFooter.xib */; };
+		BCD4F31A242041180038556F /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD4F319242041180038556F /* MessageView.swift */; };
+		BCD4F31C2420474D0038556F /* MessageDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD4F31B2420474D0038556F /* MessageDataController.swift */; };
 		BCF03F2A23F8919C008C1145 /* NewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF03F2923F8919C008C1145 /* NewsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +72,8 @@
 		BC653E8B23E5605A00A82B0E /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		BC6A16A823EFA59500563994 /* LoadingFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooter.swift; sourceTree = "<group>"; };
 		BC6A16A923EFA59500563994 /* LoadingFooter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingFooter.xib; sourceTree = "<group>"; };
+		BCD4F319242041180038556F /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		BCD4F31B2420474D0038556F /* MessageDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDataController.swift; sourceTree = "<group>"; };
 		BCF03F2923F8919C008C1145 /* NewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsManager.swift; sourceTree = "<group>"; };
 		C305CD6548218EF79A08714C /* Pods-CMPE-ISA-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CMPE-ISA-Demo.release.xcconfig"; path = "Target Support Files/Pods-CMPE-ISA-Demo/Pods-CMPE-ISA-Demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				BC34B4A42414476D00A820C2 /* UserList.swift */,
+				BCD4F319242041180038556F /* MessageView.swift */,
+				BCD4F31B2420474D0038556F /* MessageDataController.swift */,
 				BC34B4A724159A1300A820C2 /* Channel.swift */,
 				BC34B4A924159A2100A820C2 /* Message.swift */,
 				BC34B4AB24159A3800A820C2 /* ChatDataController.swift */,
@@ -356,6 +362,7 @@
 				BC003F532405A89300B615F0 /* ViewNewsOnWeb.swift in Sources */,
 				BC653E8723E436F000A82B0E /* Wrapper.swift in Sources */,
 				BC6A16AA23EFA59500563994 /* LoadingFooter.swift in Sources */,
+				BCD4F31A242041180038556F /* MessageView.swift in Sources */,
 				BC653E6A23E27A1000A82B0E /* SceneDelegate.swift in Sources */,
 				BC3AFB2423EF66A300390404 /* LocationManager.swift in Sources */,
 				BC34B4AA24159A2100A820C2 /* Message.swift in Sources */,
@@ -369,6 +376,7 @@
 				BC34B4AC24159A3800A820C2 /* ChatDataController.swift in Sources */,
 				BC653E8123E4355400A82B0E /* NewsModel.swift in Sources */,
 				BC653E8A23E43F9D00A82B0E /* NewsCollection.swift in Sources */,
+				BCD4F31C2420474D0038556F /* MessageDataController.swift in Sources */,
 				BCF03F2A23F8919C008C1145 /* NewsManager.swift in Sources */,
 				BC3AFB2623EF6A3B00390404 /* ParentController.swift in Sources */,
 			);

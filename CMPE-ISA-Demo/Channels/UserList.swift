@@ -17,10 +17,12 @@ class UserList: ParentController {
     @IBOutlet private weak var addChannel : UIBarButtonItem!
     @IBOutlet private var backgroundView : NoDataView!
     private let db = Firestore.firestore()
+    private var channel : Channel!
     
     private var channelReference: CollectionReference {
         return db.collection("channels")
     }
+    
     private let dataController = ChatDataController.shared
     
     private var channels = [Channel]()
@@ -65,10 +67,22 @@ class UserList: ParentController {
     }
     
     
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MoveToMessage" {
+            if let dest = segue.destination as? MessageView {
+                dest.channel = channel
+            }
+        }
+    }
+    
     func createChannel(_ name : String)  {
-        var jsonChannel = ["channelName" : name]
+        var jsonChannel : [String : Any] = ["channelName" : name]
         jsonChannel["channelOwner"] = GIDSignIn.sharedInstance()?.currentUser.userID ?? ""
         jsonChannel["channelCreated"] = Date.init().currentDateString()
+        let emptyMessages : [[String : String]] = [[:]]
+        jsonChannel["messages"] = emptyMessages
         channelReference.addDocument(data: jsonChannel) { error in
             if let e = error {
                 print("Error saving channel: \(e.localizedDescription)")
@@ -145,12 +159,16 @@ extension UserList : UITableViewDataSource {
         cell.accessoryType = .disclosureIndicator
         return cell
     }
-    
 }
 
 extension UserList : UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        channel = channels[indexPath.row]
+        self.performSegue(withIdentifier: "MoveToMessage", sender: self)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

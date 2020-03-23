@@ -19,7 +19,12 @@ class Channel: NSObject {
         super.init()
     }
     
-    init(id : String?, name : String, owner : String, created : String) {
+    init(id : String?,
+         name : String,
+         owner : String,
+         created : String,
+         messages : [Message] = []) {
+        
         super.init()
         channelName = name
         channelID = id

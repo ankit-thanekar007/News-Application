@@ -7,11 +7,41 @@
 //
 
 import UIKit
+import Firebase
+import MessageKit
+import FirebaseFirestore
 
-class Message: NSObject {
+class Message: MessageType {
+    
+    var sender: SenderType
+    
+    var messageId: String
+    
+    var sentDate: Date
+    
+    var kind: MessageKind
+    
     var messageID : String!
     var message : String!
     var timestamp : String!
     var senderID : String!
     var senderName : String!
+    
+    
+    init(messageID : String,
+         message : String,
+         timestamp : String,
+         senderID : String,
+         senderName : String) {
+        
+        self.messageID = messageID
+        self.message = message
+        self.timestamp = timestamp
+        self.senderID = senderID
+        self.senderName = senderName
+        self.messageId = messageID
+        self.sender = Sender.init(id: senderID, displayName: senderName)
+        self.kind = .text(message)
+        self.sentDate = Date()
+    }
 }
