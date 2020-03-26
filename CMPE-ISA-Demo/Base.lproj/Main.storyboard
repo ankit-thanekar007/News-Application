@@ -315,11 +315,11 @@
             </objects>
             <point key="canvasLocation" x="1747" y="1060"/>
         </scene>
-        <!--User-->
+        <!--Navigation Controller-->
         <scene sceneID="mF1-fY-Z9f">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="9aO-RX-GST" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="User" image="person.circle.fill" catalog="system" id="ABk-uB-SVX"/>
+                    <tabBarItem key="tabBarItem" title="" systemItem="downloads" id="ABk-uB-SVX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U10-pU-MOr">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -360,9 +360,6 @@
             <point key="canvasLocation" x="-104" y="1065"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="person.circle.fill" catalog="system" width="64" height="60"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="gvO-eN-8b6"/>
     </inferredMetricsTieBreakers>

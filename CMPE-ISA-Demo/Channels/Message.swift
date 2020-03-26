@@ -26,14 +26,13 @@ class Message: MessageType {
     var timestamp : String!
     var senderID : String!
     var senderName : String!
-    
+    var epochTime : Double!
     
     init(messageID : String,
          message : String,
          timestamp : String,
          senderID : String,
-         senderName : String) {
-        
+         senderName : String, epochTime : Double) {
         self.messageID = messageID
         self.message = message
         self.timestamp = timestamp
@@ -43,5 +42,6 @@ class Message: MessageType {
         self.sender = Sender.init(id: senderID, displayName: senderName)
         self.kind = .text(message)
         self.sentDate = Date()
+        self.epochTime = epochTime
     }
 }

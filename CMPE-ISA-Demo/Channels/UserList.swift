@@ -16,7 +16,7 @@ class UserList: ParentController {
     @IBOutlet private weak var tableView : UITableView!
     @IBOutlet private weak var addChannel : UIBarButtonItem!
     @IBOutlet private var backgroundView : NoDataView!
-    private let db = Firestore.firestore()
+    private var db : Firestore!
     private var channel : Channel!
     
     private var channelReference: CollectionReference {
@@ -30,6 +30,7 @@ class UserList: ParentController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        db = Firestore.firestore()
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance()?.restorePreviousSignIn()
         dataController.delegate = self
@@ -61,11 +62,6 @@ class UserList: ParentController {
             self.channelsDidUpdate()
         }
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     
     // MARK: - Navigation
     

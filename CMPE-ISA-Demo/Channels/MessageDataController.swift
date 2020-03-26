@@ -27,9 +27,18 @@ class MessageDataController: NSObject {
             if let message = documentData["message"] as?  String,
                 let senderID = documentData["senderID"] as?  String,
                 let senderName = documentData["senderName"] as?  String,
-                let timestamp = documentData["timestamp"] as?  String {
-                let message = Message.init(messageID: change.document.documentID, message: message, timestamp: timestamp, senderID: senderID, senderName: senderName)
-                masterMessageList.append(message)
+                let timestamp = documentData["timestamp"] as?  String,
+                let epoch = documentData["epoch"] as?  Double{
+                let message = Message.init(messageID: change.document.documentID, message: message, timestamp: timestamp, senderID: senderID, senderName: senderName, epochTime: epoch)
+                let messagePresent = masterMessageList.first { (m1) -> Bool in
+                    return m1.messageID == change.document.documentID
+                }
+                if messagePresent == nil {
+                    masterMessageList.append(message)
+                    masterMessageList.sort { (m1, m2) -> Bool in
+                        m1.epochTime < m2.epochTime
+                    }
+                }
             }
             break
         case .modified:
@@ -43,6 +52,7 @@ class MessageDataController: NSObject {
         }
         delegate?.messagesDidUpdate()
     }
+    
     
     
 }

@@ -18,7 +18,7 @@ class MessageView: MessagesViewController {
     @IBOutlet private var backgroundView : NoDataView!
     
     private var chatReference : CollectionReference!
-    private let db = Firestore.firestore()
+    private var db : Firestore!
     var channel : Channel!
     private var masterMessageList : [Message] = []
     private let dataController = MessageDataController.shared
@@ -27,8 +27,16 @@ class MessageView: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        db = Firestore.firestore()
         title = channel.channelName
+        
+        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+            layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+            layout.textMessageSizeCalculator.incomingAvatarSize = .zero
+        }
+        
+        messagesCollectionView.keyboardDismissMode = .onDrag
+        
         setupChatController()
         listenToChannels()
     }
@@ -51,6 +59,7 @@ class MessageView: MessagesViewController {
         dataController.delegate = self
         
         messageInputBar.leftStackView.alignment = .center
+        messageInputBar.leftStackView.layer.borderColor = UIColor.black.cgColor
         messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
     }
     
@@ -72,13 +81,13 @@ class MessageView: MessagesViewController {
     }
     
     func sendMessage(_ message : String){
-//        chatReference = db.collection(["channels", channel.channelID, "messages"].joined(separator: "/"))
         
         var messages : [String : Any] = [:]
         messages["message"] = message
         messages["senderID"] =  GIDSignIn.sharedInstance()?.currentUser.userID
         messages["senderName"] = GIDSignIn.sharedInstance()?.currentUser.profile.givenName
         messages["timestamp"] = Date.init().currentDateString()
+        messages["epoch"] = Date.init().timeIntervalSince1970
         
         chatReference.addDocument(data: messages) { (error) in
             if let e = error {
@@ -102,10 +111,12 @@ extension MessageView: MessagesDisplayDelegate {
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let message = masterMessageList[indexPath.row]
-        let user = GIDSignIn.sharedInstance()?.currentUser
-        let uid = user?.userID ?? "No ID"
-        return message.senderID == uid ?
-            .bubbleTail(.topRight , .curved) : .bubbleTail(.topLeft, .curved)
+        let uid = GIDSignIn.sharedInstance()?.currentUser.userID
+        return (uid == message.senderID) ? .bubbleTail(.bottomRight, .curved) : .bubbleTail(.bottomLeft, .curved)
+    }
+    
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return .white
     }
 }
 
@@ -115,14 +126,6 @@ extension MessageView: MessagesLayoutDelegate {
     
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize.zero
-    }
-    
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: 0, height: 8)
-    }
-    
-    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 0
     }
 }
 
@@ -158,14 +161,22 @@ extension MessageView: MessagesDataSource {
     
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
-        let attribitedString = NSAttributedString(
+        let message = masterMessageList[indexPath.row]
+        let uid = GIDSignIn.sharedInstance()?.currentUser.userID
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = uid == message.senderID ? .right : .left
+        return NSAttributedString(
             string: name,
             attributes: [
-                .font: UIFont.preferredFont(forTextStyle: .headline),
-                .foregroundColor: UIColor(white: 0.3, alpha: 1)
+                .font: UIFont.preferredFont(forTextStyle: .caption1),
+                .foregroundColor: UIColor(white: 0.3, alpha: 1),
+                .paragraphStyle : paragraphStyle
             ]
         )
-        return attribitedString
+    }
+    
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 20
     }
     
 }
@@ -179,8 +190,9 @@ extension MessageView : MessageInputBarDelegate {
 }
 
 extension MessageView : ObserveMessages {
+    
     func messagesDidUpdate() {
         masterMessageList = dataController.masterMessageList
-        self.messagesCollectionView.reloadData()
+        self.messagesCollectionView.reloadDataAndKeepOffset()
     }
 }
