@@ -1,4 +1,4 @@
-# CMPE-ISA-Demo
+# News Application
 
 This a news application with build in feature to create channels to chat.
 
