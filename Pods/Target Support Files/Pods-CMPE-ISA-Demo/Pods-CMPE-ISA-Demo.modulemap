@@ -1,0 +1,6 @@
+framework module Pods_CMPE_ISA_Demo {
+  umbrella header "Pods-CMPE-ISA-Demo-umbrella.h"
+
+  export *
+  module * { export * }
+}
