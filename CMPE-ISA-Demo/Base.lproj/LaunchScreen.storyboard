@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,32 +16,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sjsu_logo" translatesAutoresizingMaskIntoConstraints="NO" id="0GX-VM-VKB">
-                                <rect key="frame" x="21" y="0.0" width="333.5" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="0GX-VM-VKB" secondAttribute="height" multiplier="0.5:1" id="RS2-xQ-vGr"/>
-                                </constraints>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="News Application " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDT-Xh-FAL">
+                                <rect key="frame" x="35.5" y="308.5" width="304" height="50.5"/>
+                                <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="0GX-VM-VKB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Q6g-u7-Nva"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0GX-VM-VKB" secondAttribute="trailing" id="Vf3-ja-iYG"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0GX-VM-VKB" secondAttribute="bottom" id="dbJ-MK-23u"/>
-                            <constraint firstItem="0GX-VM-VKB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="f88-L4-EHP"/>
-                            <constraint firstItem="0GX-VM-VKB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="top" id="q5z-4c-BnW"/>
-                            <constraint firstItem="0GX-VM-VKB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="tPc-E9-RbX"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" red="0.81453432736696896" green="0.81460261845088511" blue="0.85853950127021417" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="dDT-Xh-FAL" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="7GA-vy-1bN"/>
+                            <constraint firstItem="dDT-Xh-FAL" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="83G-22-dPS"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="-1" y="166"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="sjsu_logo" width="600" height="616.5"/>
-    </resources>
 </document>

@@ -23,7 +23,6 @@ class UserDetails: UIViewController {
         // Configure Fetch Request
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            
         
         let managedContext = appDelegate.persistentContainer.viewContext
         managedContext.automaticallyMergesChangesFromParent = true

@@ -35,7 +35,7 @@ class Wrapper: NSObject {
     
     func GET(r : WRequest){
         task?.cancel()
-        if var urlComponents = URLComponents(string: r.url){
+        if let urlComponents = URLComponents(string: r.url){
           guard let url = urlComponents.url else {
             return
           }
@@ -55,9 +55,5 @@ class Wrapper: NSObject {
           }
           task?.resume()
         }
-    }
-    
-    func POST(){
-        
     }
 }
